@@ -7,15 +7,8 @@ import {
   CardDescription
 } from '~/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
-import { Button, buttonVariants } from '~/components/ui/button';
-import {
-  CalendarIcon,
-  CalendarPlus,
-  Edit2Icon,
-  PlusIcon,
-  Ticket,
-  UserCheck2
-} from 'lucide-react';
+import { buttonVariants } from '~/components/ui/button';
+import { CalendarPlus, PlusIcon, Ticket, UserCheck2 } from 'lucide-react';
 import { type EventCardProps, EventCard } from './_components/event-card';
 import Link from 'next/link';
 import {
@@ -38,7 +31,7 @@ import {
 import { EventsFilters } from './_components/events-filters';
 import { StatCard } from '../../_components/stat-card';
 
-export async function loader() {
+export async function getData() {
   const events = [
     ...Array.from({ length: 11 }).map(() => ({
       id: '1',
@@ -69,7 +62,7 @@ export async function loader() {
 }
 
 export default async function Page() {
-  const { events, name, description, logo } = await loader();
+  const { events, name, description, logo } = await getData();
 
   return (
     <Card>
