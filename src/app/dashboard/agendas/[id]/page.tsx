@@ -31,7 +31,7 @@ import {
 import { EventsFilters } from './_components/events-filters';
 import { StatCard } from '../../_components/stat-card';
 
-export async function getData() {
+async function getData() {
   const events = [
     ...Array.from({ length: 11 }).map(() => ({
       id: '1',
