@@ -5,8 +5,10 @@ import {
   EditIcon,
   ExternalLink,
   Globe,
+  Info,
   MapPin,
   MoreVerticalIcon,
+  Rss,
   TrashIcon
 } from 'lucide-react';
 import { Badge } from '~/components/ui/badge';
@@ -15,10 +17,11 @@ import { Card, CardContent, CardFooter } from '~/components/ui/card';
 import {
   TypographyH3,
   TypographyH4,
+  TypographyLarge,
   TypographyMuted,
   TypographySmall
 } from '~/components/ui/typography';
-import { format, isSameDay } from 'date-fns';
+import { format, isPast, isSameDay } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';
 import Link from 'next/link';
 import { Separator } from '~/components/ui/separator';
@@ -31,26 +34,11 @@ import {
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu';
 import { cn } from '~/lib/utils';
-
-export interface EventCardProps {
-  id: number | string;
-  name: string;
-  description?: string | null;
-  cover?: string | null;
-  location?: string;
-  url?: string;
-  startDate?: string | Date;
-  endDate?: string | Date;
-  categories: string[];
-  likes: number;
-  subscribers: number;
-  isDraft?: boolean;
-}
+import type { EventItem as Props } from '~/app/dashboard/_lib/types';
 
 export function EventCard({
   id,
   name,
-  description,
   cover,
   location,
   url,
@@ -59,8 +47,9 @@ export function EventCard({
   categories,
   likes,
   subscribers,
-  isDraft = false
-}: EventCardProps) {
+  isDraft = false,
+  agendaId
+}: Props) {
   let formattedDate = null;
 
   const formatDate = (date: string | Date) =>
@@ -76,66 +65,68 @@ export function EventCard({
     }
   }
 
+  const isPastEvent = startDate ? isPast(new Date(startDate)) : false;
+
   return (
     <Card>
-      <CardContent className='p-0 relative'>
+      <CardContent className='p-0 relative h-52'>
+        {isDraft && (
+          <Badge className='top-1 right-1 absolute z-10'>Brouillon</Badge>
+        )}
+        {isPastEvent && (
+          <div className='absolute z-10 h-full w-full flex flex-col justify-center items-center'>
+            <TypographyLarge className='uppercase bg-accent text-sm px-3 py-2 rounded-lg'>
+              événement terminé
+            </TypographyLarge>
+          </div>
+        )}
         {cover ? (
-          <>
-            {isDraft && (
-              <Badge className='top-2 right-2 absolute z-20'>Brouillon</Badge>
+          <img
+            alt={name}
+            src={cover}
+            className={cn(
+              'object-cover h-full w-full rounded-t-lg aspect-2/3',
+              (isDraft || isPastEvent) && 'grayscale',
+              isPastEvent && 'opacity-80'
             )}
-            <img
-              alt={name}
-              src={cover}
-              className={cn(
-                'object-cover h-72 w-full rounded-t-lg',
-                isDraft && 'grayscale'
-              )}
-            />
-          </>
+          />
         ) : (
-          <div className='h-72 w-full bg-gray-200 rounded-t-lg' />
+          <div className='h-full w-full bg-gray-200 rounded-t-lg aspect-2/3' />
         )}
       </CardContent>
       <CardFooter className='p-4 pt-2 grid gap-2'>
         <div className='grid gap-1'>
-          <div className='flex items-center justify-center'>
-            <TypographyH3>{name}</TypographyH3>
-            {isDraft ? (
-              <Badge
-                variant='outline'
-                className='ml-2'>
-                Brouillon
-              </Badge>
-            ) : null}
-          </div>
+          {isDraft ? <Badge className='w-fit mx-auto'>Brouillon</Badge> : null}
+          <TypographyLarge className='text-center'>{name}</TypographyLarge>
           <div>
-            {formattedDate ? (
-              <div className='flex items-center'>
-                <CalendarClockIcon className='w-4 h-4 mr-2' />
-                <TypographyMuted>{formattedDate}</TypographyMuted>
-              </div>
-            ) : null}
-            {location ? (
-              <div className='flex items-center'>
-                <MapPin className='w-4 h-4 mr-2' />
-                <TypographyMuted>{location}</TypographyMuted>
-              </div>
-            ) : null}
+            <div className='flex items-center'>
+              <CalendarClockIcon className='w-4 h-4 mr-2' />
+              <TypographyMuted>
+                {formattedDate ?? 'Date(s) non définie(s)'}
+              </TypographyMuted>
+            </div>
+            <div className='flex items-center'>
+              <MapPin className='w-4 h-4 mr-2' />
+              <TypographyMuted>{location ?? 'Lieu non défini'}</TypographyMuted>
+            </div>
             {url ? (
               <TypographyMuted>
                 <a
                   href={url}
                   className='inline-flex items-center hover:underline'>
-                  <Globe className='w-4 h-4 mr-2' />
+                  <Info className='w-4 h-4 mr-2' />
                   Consulter le site web
                   <ExternalLink className='w-4 h-4 ml-2' />
                 </a>
               </TypographyMuted>
-            ) : null}
+            ) : (
+              <div className='flex items-center'>
+                <Info className='w-4 h-4 mr-2' />
+                <TypographyMuted>Site web non défini</TypographyMuted>
+              </div>
+            )}
           </div>
         </div>
-        {description && <TypographyMuted>{description}</TypographyMuted>}
         {categories.length > 0 ? (
           <div className='flex items-center gap-1 flex-wrap'>
             {categories.map((c) => (
@@ -171,19 +162,21 @@ export function EventCard({
                 className: 'w-full',
                 size: 'sm'
               })}
-              href={`/dashboard/agendas/${id}/e/${id}`}>
+              href={`/dashboard/agendas/${agendaId}/e/${id}`}>
               Consulter
               <ArrowRight className='ml-2 w-4 h-4' />
             </Link>
           )}
-          <Link
-            href={`/dashboard/agendas/${id}/e/${id}/edit`}
-            className={buttonVariants({
-              size: 'sm',
-              className: 'w-full'
-            })}>
-            Éditer <EditIcon className='w-4 h-4 ml-2' />
-          </Link>
+          {!isPastEvent && (
+            <Link
+              href={`/dashboard/agendas/${agendaId}/e/${id}/edit`}
+              className={buttonVariants({
+                size: 'sm',
+                className: 'w-full'
+              })}>
+              Éditer <EditIcon className='w-4 h-4 ml-2' />
+            </Link>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger
               className={buttonVariants({
@@ -195,6 +188,12 @@ export function EventCard({
             <DropdownMenuContent align='end'>
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              {isDraft && (
+                <DropdownMenuItem>
+                  <Rss className='w-4 h-4 mr-2' />
+                  Publier
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem>
                 <CopyIcon className='w-4 h-4 mr-2' />
                 Dupliquer

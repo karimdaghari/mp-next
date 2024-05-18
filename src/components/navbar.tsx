@@ -19,6 +19,7 @@ import {
   NavigationMenuList
 } from '~/components/ui/navigation-menu';
 import { TypographyMuted, TypographySmall } from '~/components/ui/typography';
+import { cn } from '~/lib/utils';
 
 export function Navbar() {
   const menu = [
@@ -31,23 +32,14 @@ export function Navbar() {
   return (
     <nav className='p-2 px-4 bg-white border-b flex items-center justify-between shadow-sm'>
       <div className='flex items-center space-x-2'>
-        <Logo className='h-7 w-fit' />
-        <NavigationMenu>
-          <NavigationMenuList className='pt-0.5'>
-            {menu.map((item) => (
-              <NavigationMenuItem
-                className={buttonVariants({
-                  variant: 'ghost',
-                  className: 'font-normal'
-                })}
-                key={item.link}>
-                <NavigationMenuLink asChild>
-                  <Link href={item.link}>{item.label}</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <Link href='/dashboard/agendas'>
+          <Logo
+            className={buttonVariants({
+              variant: 'ghost',
+              className: 'h-10 w-fit'
+            })}
+          />
+        </Link>
       </div>
       <div className='pt-0.5'>
         <div>
@@ -58,14 +50,16 @@ export function Navbar() {
                 className: 'flex items-center justify-start'
               })}>
               <Avatar className='mr-2 h-8 w-8'>
-                <AvatarImage />
+                <AvatarImage src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXia5ZUF0lUUa3JrMJzVQ2r-ojR8D6E9tZnd6D-6teRQ&s' />
                 <AvatarFallback>
-                  <TypographySmall>JD</TypographySmall>
+                  <TypographySmall>D</TypographySmall>
                 </AvatarFallback>
               </Avatar>
               <div className='leading-snug text-left'>
-                <TypographyMuted className='text-xs'>Dauphine</TypographyMuted>
-                <TypographySmall>Jean Dupont</TypographySmall>
+                <TypographySmall>Dauphine</TypographySmall>
+                <TypographyMuted className='text-xs'>
+                  Jean Dupont
+                </TypographyMuted>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>

@@ -1,10 +1,4 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger
-} from '~/components/ui/popover';
 import { SearchInput } from './search-input';
-import { Label } from '~/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -12,10 +6,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '~/components/ui/select';
-import { buttonVariants } from '~/components/ui/button';
-import { TypographyH4, TypographyMuted } from '~/components/ui/typography';
-import { Settings2Icon } from 'lucide-react';
-import { Checkbox } from '~/components/ui/checkbox';
+import { DisplayFilters } from './display-filters';
 
 export function AgendaFilters() {
   return (
@@ -24,43 +15,26 @@ export function AgendaFilters() {
         <div className='w-[300px]'>
           <SearchInput placeholder='Rechercher vos agendas...' />
         </div>
-        <div className='flex items-center space-x-2 border p-3 rounded-lg'>
-          <Checkbox
-            id='display'
-            checked
-          />
-          <Label
-            htmlFor='display'
-            className='inline-block'>
-            Afficher les brouillons
-          </Label>
-        </div>
+        <DisplayFilters />
       </div>
 
-      <div className='flex items-center space-x-2'>
-        <Select>
-          <SelectTrigger
-            id='sort'
-            className='w-[200px]'>
-            <SelectValue placeholder='Trier par popularité' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='light'>Plus populaire</SelectItem>
-            <SelectItem value='dark'>Moins populaire</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger
-            id='sort'
-            className='w-[250px]'>
-            <SelectValue placeholder='Trier par ordre alphabétique' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='light'>De A à Z</SelectItem>
-            <SelectItem value='dark'>De Z à A</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <Select>
+        <SelectTrigger
+          id='sort'
+          className='w-[260px]'>
+          <SelectValue placeholder='Trier par' />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value='popular-first'>
+            Popularité (plus populaire en 1er)
+          </SelectItem>
+          <SelectItem value='unpopular-first'>
+            Popularité (moins populaire 1er)
+          </SelectItem>
+          <SelectItem value='alphabetical-asc'>Alphabétique (A-Z)</SelectItem>
+          <SelectItem value='alphabetical-desc'>Alphabétique (Z-A)</SelectItem>
+        </SelectContent>
+      </Select>
     </section>
   );
 }

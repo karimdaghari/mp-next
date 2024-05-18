@@ -4,65 +4,121 @@ import { useForm } from 'react-hook-form';
 import { MultiSelect } from '~/components/multi-select';
 import { Button, buttonVariants } from '~/components/ui/button';
 import { DatePicker } from '~/components/ui/date-picker';
-import { Form } from '~/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Switch } from '~/components/ui/switch';
 import { Textarea } from '~/components/ui/textarea';
 import { TypographyLarge, TypographyMuted } from '~/components/ui/typography';
 import { EventPreview } from './event-preview';
-
-interface Input {
-  name: string;
-  description?: string;
-  location?: string;
-  url?: string;
-  startDate?: string | Date;
-  endDate?: string | Date;
-  tags: string[];
-}
+import type { EventItem } from '~/app/dashboard/_lib/types';
+import { CopyIcon, Rss } from 'lucide-react';
+import { Badge } from '~/components/ui/badge';
 
 interface Props {
   title: string;
   description: string;
-  input?: Input;
+  input?: EventItem;
 }
 
 export function EventForm({ title, description, input }: Props) {
-  const form = useForm<Input>({
+  const form = useForm<EventItem>({
     defaultValues: input
   });
+
+  const [, isDraft] = form.watch(['agendaId', 'isDraft']);
 
   return (
     <div className='grid grid-cols-2 gap-1'>
       <Form {...form}>
         <form className='bg-white p-4 rounded-lg border shadow space-y-4'>
           <div>
-            <TypographyLarge>{title}</TypographyLarge>
+            <div className='flex items-center'>
+              <TypographyLarge>{title}</TypographyLarge>
+              {isDraft && <Badge className='ml-2'>Brouillon</Badge>}
+            </div>
             <TypographyMuted>{description}</TypographyMuted>
           </div>
-          <div>
-            <Label htmlFor='name'>Nom</Label>
-            <Input id='name' />
-          </div>
-          <div>
-            <Label htmlFor='description'>Description</Label>
-            <Textarea
-              id='description'
-              rows={5}
-            />
-          </div>
-          <div>
-            <Label htmlFor='location'>Lieu</Label>
-            <Input id='location' />
-          </div>
-          <div>
-            <Label htmlFor='url'>URL</Label>
-            <Input
-              type='url'
-              id='url'
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name='name'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nom</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Nom'
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='description'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder='Description'
+                    rows={5}
+                    {...field}
+                    value={field.value || ''}
+                  />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='location'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Lieu</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Lieu'
+                    {...field}
+                    value={field.value || ''}
+                  />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='url'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>URL</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='URL'
+                    {...field}
+                    value={field.value || ''}
+                  />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className='space-y-2'>
             <div className='flex items-center justify-between'>
               <Label htmlFor='date'>Date</Label>
@@ -87,34 +143,51 @@ export function EventForm({ title, description, input }: Props) {
             </div>
           </div>
           <div className='flex flex-col space-y-2'>
-            <Label>Tags</Label>
+            <Label>Catégories</Label>
             <MultiSelect
-              placeholder='Sélectionnez un tag...'
+              placeholder='Sélectionnez une catégorie...'
               data={[
-                { value: '1', label: 'Tag 1' },
-                { value: '2', label: 'Tag 2' },
-                { value: '3', label: 'Tag 3' }
+                { value: '1', label: 'Cat. 1' },
+                { value: '2', label: 'Cat. 2' },
+                { value: '3', label: 'Cat. 3' }
               ]}
             />
           </div>
           <div className='grid grid-cols-2 gap-2'>
-            <Link
-              href='/dashboard/agendas/1'
-              className={buttonVariants({ variant: 'secondary' })}>
-              Annuler
-            </Link>
-            <Button className='w-full'>Sauvegarder</Button>
+            <Button
+              variant={isDraft ? 'secondary' : 'default'}
+              className='w-full'>
+              Sauvegarder
+            </Button>
+            {isDraft ? (
+              <Button
+                className={buttonVariants({
+                  className: 'w-full'
+                })}>
+                <Rss className='w-4 h-4 mr-2' />
+                Publier
+              </Button>
+            ) : (
+              <Button
+                className={buttonVariants({
+                  variant: 'secondary',
+                  className: 'w-full'
+                })}>
+                <CopyIcon className='w-4 h-4 mr-2' />
+                Dupliquer
+              </Button>
+            )}
           </div>
         </form>
       </Form>
-      <div className='bg-white p-4 border rounded-lg space-y-4'>
+      <div className='bg-white p-4 border rounded-lg'>
         <div>
           <TypographyLarge>Prévisualisation</TypographyLarge>
           <TypographyMuted>
             Aperçu de {"l'événement"} tel {"qu'il"} sera affiché sur iPhone
           </TypographyMuted>
         </div>
-        <div className='scale-90'>
+        <div className='scale-95'>
           <EventPreview />
         </div>
       </div>

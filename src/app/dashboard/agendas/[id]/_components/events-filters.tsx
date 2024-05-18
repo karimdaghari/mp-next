@@ -1,9 +1,6 @@
 'use client';
-import { MultiSelect } from '~/components/multi-select';
 import { SearchInput } from '../../_components/search-input';
 import { DateRangePicker } from '~/components/date-range-picker';
-import { Checkbox } from '~/components/ui/checkbox';
-import { Label } from '~/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -11,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '~/components/ui/select';
+import { DisplayFilters } from '../../_components/display-filters';
 
 export function EventsFilters() {
   return (
@@ -20,17 +18,7 @@ export function EventsFilters() {
           <div className='w-[350px]'>
             <SearchInput placeholder='Rechercher vos events par titre, tag, lieu, etc...' />
           </div>
-          <div className='flex items-center space-x-2 border p-3 rounded-lg'>
-            <Checkbox
-              id='display'
-              checked
-            />
-            <Label
-              htmlFor='display'
-              className='inline-block'>
-              Afficher les brouillons
-            </Label>
-          </div>
+          <DisplayFilters />
         </div>
         <div>
           <DateRangePicker
@@ -40,30 +28,23 @@ export function EventsFilters() {
         </div>
       </div>
 
-      <div className='flex items-center space-x-2'>
-        <Select>
-          <SelectTrigger
-            id='sort'
-            className='w-[200px]'>
-            <SelectValue placeholder='Trier par popularité' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='light'>Plus populaire</SelectItem>
-            <SelectItem value='dark'>Moins populaire</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger
-            id='sort'
-            className='w-[250px]'>
-            <SelectValue placeholder='Trier par ordre alphabétique' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='light'>De A à Z</SelectItem>
-            <SelectItem value='dark'>De Z à A</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <Select>
+        <SelectTrigger
+          id='sort'
+          className='w-[300px]'>
+          <SelectValue placeholder='Trier par' />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value='popular-first'>
+            Popularité (plus populaire en 1er)
+          </SelectItem>
+          <SelectItem value='unpopular-first'>
+            Popularité (moins populaire 1er)
+          </SelectItem>
+          <SelectItem value='alphabetical-asc'>Alphabétique (A-Z)</SelectItem>
+          <SelectItem value='alphabetical-desc'>Alphabétique (Z-A)</SelectItem>
+        </SelectContent>
+      </Select>
     </section>
   );
 }
