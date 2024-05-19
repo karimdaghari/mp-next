@@ -72,15 +72,15 @@ export function AgendaCard({
             alt={name}
             src={cover}
             className={cn(
-              'object-cover h-52 w-full rounded-t-lg aspect-2/3',
+              'object-cover h-52 w-full rounded-t-lg aspect-2/3 border-b',
               isDraft && 'grayscale'
             )}
           />
         ) : (
-          <div className='h-52 w-full bg-gray-200 rounded-t-lg aspect-2/3' />
+          <div className='h-52 w-full bg-gray-200 rounded-t-lg aspect-2/3 border-b' />
         )}
         <div className='absolute w-full flex items-center justify-center -bottom-9'>
-          <Avatar className='h-20 w-20'>
+          <Avatar className='h-20 w-20 border'>
             {logo ? <AvatarImage src={logo} /> : null}
             <AvatarFallback>
               <TypographyLarge>{name[0]}</TypographyLarge>

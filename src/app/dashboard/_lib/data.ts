@@ -135,7 +135,7 @@ const agendas: AgendaItem[] = [
     description:
       "Son offre de formation toujours plus attractive, la renommée internationale de ses équipes scientifiques, et la reconnaissance de son modèle de développement obtenue avec l'accréditation Equis font de Dauphine une université créative, responsable et résolument tournée vers l'international.",
     cover:
-      'https://a.storyblok.com/f/188325/1024x681/b70ae71a00/screen-shot-2018-11-28-at-18-44-51-1024x681.jpg',
+      'https://cdn.britannica.com/78/149478-050-6C499F38/Palace-of-the-Parliament-Dauphine-region-Grenoble.jpg',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXia5ZUF0lUUa3JrMJzVQ2r-ojR8D6E9tZnd6D-6teRQ&s',
     eventsNumber: 10,
     attendanceRate: 75.5,
@@ -147,7 +147,7 @@ const agendas: AgendaItem[] = [
     description:
       "Dauphine Alumni est l'association des diplômés et des étudiants de l'Université Dauphine-PSL.",
     cover:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yZsBbxuHd-mZTX5pWMW6HcjdxEIBj0umaBpIuelCLA&s',
+      'https://www.lalettredelassurance.com/wp-content/uploads/2014/03/Logo-Dauphine-Alumni-.jpg',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpoBSZdmbvoM6_U90DNZ9Kbcv43bL6d8skLJPdcDH1Zg&s',
     eventsNumber: 5,
     attendanceRate: 60.3,

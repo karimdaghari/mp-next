@@ -27,7 +27,7 @@ export default function Page({
     redirect('/404');
   }
 
-  const { agenda, name } = event;
+  const { agenda, name, description } = event;
 
   return (
     <>
@@ -48,7 +48,7 @@ export default function Page({
           <BreadcrumbItem>{name}</BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className='grid grid-cols-2 gap-1'>
+      <div className='grid gap-1 max-w-2xl mx-auto'>
         <div className='space-y-1'>
           <div className='grid grid-cols-2 gap-1'>
             <StatCard
@@ -62,19 +62,14 @@ export default function Page({
               value={6}
             />
           </div>
-          <div className='bg-white border rounded-lg p-4'>event page</div>
-        </div>
-        <div className='bg-white border rounded-lg p-4'>
-          <div>
-            <TypographyLarge>
-              Prévisualisation de {"l'événement"}
-            </TypographyLarge>
-            <TypographyMuted>
-              Visualisez {"l'événement"} tel {"qu'il"} sera affiché
-            </TypographyMuted>
-          </div>
-          <div className='scale-90'>
-            <EventPreview />
+          <div className='bg-white border rounded-lg p-4'>
+            <div>
+              <TypographyLarge>{name}</TypographyLarge>
+              <TypographyMuted>{description}</TypographyMuted>
+            </div>
+            <div className='scale-90'>
+              <EventPreview />
+            </div>
           </div>
         </div>
       </div>
