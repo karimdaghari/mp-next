@@ -1,4 +1,11 @@
-import { CalendarDaysIcon, GlobeIcon, Heart, MapPinned } from 'lucide-react';
+import {
+  CalendarDaysIcon,
+  ChevronRight,
+  GlobeIcon,
+  Heart,
+  Info,
+  MapPinned
+} from 'lucide-react';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
 import {
@@ -55,6 +62,11 @@ export function EventPreview() {
                 <div className='flex items-center'>
                   <MapPinned className='h-5 w-5 mr-1' />
                   <TypographySmall>Pas de lieu défini</TypographySmall>
+                </div>
+                <div className='flex items-center'>
+                  <Info className='h-5 w-5 mr-1' />
+                  <TypographySmall>En savoir plus</TypographySmall>
+                  <ChevronRight className='h-4 w-4 ml-2' />
                 </div>
               </div>
 
