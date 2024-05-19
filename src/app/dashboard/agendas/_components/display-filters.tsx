@@ -1,4 +1,5 @@
 import { Settings2 } from 'lucide-react';
+import { Fragment } from 'react';
 import { buttonVariants } from '~/components/ui/button';
 import { Label } from '~/components/ui/label';
 import {
@@ -7,13 +8,23 @@ import {
   PopoverTrigger
 } from '~/components/ui/popover';
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
+import { Separator } from '~/components/ui/separator';
 import {
   TypographyLarge,
   TypographyMuted,
   TypographySmall
 } from '~/components/ui/typography';
 
-export function DisplayFilters() {
+interface Props {
+  data?: Array<
+    {
+      label: string;
+      value: string;
+    }[]
+  >;
+}
+
+export function DisplayFilters({ data }: Props) {
   return (
     <Popover>
       <PopoverTrigger
@@ -55,6 +66,24 @@ export function DisplayFilters() {
             <Label htmlFor='r3'>Afficher que les publiés</Label>
           </div>
         </RadioGroup>
+        {data?.map((d) => (
+          <Fragment key={Math.random()}>
+            <Separator />
+            <RadioGroup value={d[0].value}>
+              {d.map((item) => (
+                <div
+                  key={Math.random()}
+                  className='flex items-center space-x-2'>
+                  <RadioGroupItem
+                    value={item.value}
+                    id={item.value}
+                  />
+                  <Label htmlFor={item.value}>{item.label}</Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </Fragment>
+        ))}
       </PopoverContent>
     </Popover>
   );

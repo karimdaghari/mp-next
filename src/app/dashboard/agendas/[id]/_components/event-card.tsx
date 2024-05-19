@@ -111,17 +111,18 @@ export function EventCard({
         <div className='p-4 space-y-1'>
           <TooltipProvider delayDuration={0}>
             <Tooltip>
-              <TooltipTrigger className='cursor-pointer text-left'>
+              <TooltipTrigger className='cursor-auto text-left'>
                 <CardTitle className='line-clamp-1 text-xl'>{name}</CardTitle>
               </TooltipTrigger>
               <TooltipContent
                 align='start'
                 className='max-w-80'>
-                {name}
+                <TypographySmall>Nom</TypographySmall>
+                <TypographyMuted>{name}</TypographyMuted>
               </TooltipContent>
             </Tooltip>
             <Tooltip>
-              <TooltipTrigger className='cursor-pointer text-left'>
+              <TooltipTrigger className='cursor-auto text-left'>
                 <CardDescription className='line-clamp-2'>
                   {description ??
                     "Aucune description n'a été renseignée pour cet événement. Veuillez en ajouter une."}
@@ -130,8 +131,11 @@ export function EventCard({
               <TooltipContent
                 align='start'
                 className='max-w-72'>
-                {description ??
-                  "Aucune description n'a été renseignée pour cet événement. Veuillez en ajouter une."}
+                <TypographySmall>Description</TypographySmall>
+                <TypographyMuted>
+                  {description ??
+                    "Aucune description n'a été renseignée pour cet événement. Veuillez en ajouter une."}
+                </TypographyMuted>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

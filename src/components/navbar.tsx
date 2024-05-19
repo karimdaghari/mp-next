@@ -49,21 +49,23 @@ export function Navbar() {
                 variant: 'ghost',
                 className: 'flex items-center justify-start'
               })}>
-              <Avatar className='mr-2 h-8 w-8'>
+              <div className='leading-snug text-right'>
+                <TypographySmall>Dauphine</TypographySmall>
+                <TypographyMuted className='text-xs'>
+                  Jean Michel Da Silva Da Costa
+                </TypographyMuted>
+              </div>
+              <Avatar className='ml-2 h-8 w-8'>
                 <AvatarImage src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXia5ZUF0lUUa3JrMJzVQ2r-ojR8D6E9tZnd6D-6teRQ&s' />
                 <AvatarFallback>
                   <TypographySmall>D</TypographySmall>
                 </AvatarFallback>
               </Avatar>
-              <div className='leading-snug text-left'>
-                <TypographySmall>Dauphine</TypographySmall>
-                <TypographyMuted className='text-xs'>
-                  Jean Dupont
-                </TypographyMuted>
-              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Jean Dupont</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                Jean Michel Da Silva Da Costa
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Paramètres</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>

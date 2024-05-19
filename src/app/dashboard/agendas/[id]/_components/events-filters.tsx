@@ -18,7 +18,24 @@ export function EventsFilters() {
           <div className='w-[350px]'>
             <SearchInput placeholder='Rechercher vos events par titre, tag, lieu, etc...' />
           </div>
-          <DisplayFilters />
+          <DisplayFilters
+            data={[
+              [
+                {
+                  label: 'Afficher tout les events',
+                  value: 'all'
+                },
+                {
+                  label: 'Afficher que les events en cours',
+                  value: 'current'
+                },
+                {
+                  label: 'Afficher que les events passés',
+                  value: 'past'
+                }
+              ]
+            ]}
+          />
         </div>
         <div>
           <DateRangePicker
@@ -39,7 +56,7 @@ export function EventsFilters() {
             Popularité (plus populaire en 1er)
           </SelectItem>
           <SelectItem value='unpopular-first'>
-            Popularité (moins populaire 1er)
+            Popularité (moins populaire en 1er)
           </SelectItem>
           <SelectItem value='alphabetical-asc'>Alphabétique (A-Z)</SelectItem>
           <SelectItem value='alphabetical-desc'>Alphabétique (Z-A)</SelectItem>

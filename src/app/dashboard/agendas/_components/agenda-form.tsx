@@ -1,15 +1,26 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { Button } from '~/components/ui/button';
+import { Button, buttonVariants } from '~/components/ui/button';
 import { FileUploader } from '~/components/ui/file-uploader';
 import { Form } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Textarea } from '~/components/ui/textarea';
+import type { AgendaItem } from '../../_lib/types';
+import { CopyIcon, LockIcon, Rss } from 'lucide-react';
 
-export function AgendaForm() {
-  const form = useForm();
+interface Props {
+  input?: Omit<AgendaItem, 'events'>;
+}
+
+export function AgendaForm({ input }: Props) {
+  const form = useForm<AgendaItem>({
+    defaultValues: input
+  });
+
+  const [isDraft] = form.watch(['isDraft']);
+
   return (
     <Form {...form}>
       <form className='space-y-4'>
@@ -29,7 +40,36 @@ export function AgendaForm() {
           <Label>Description</Label>
           <Textarea rows={5} />
         </div>
-        <Button className='w-full'>Sauvegarder</Button>
+        <div className='flex items-center w-full gap-1'>
+          <Button className='w-full'>Sauvegarder</Button>
+          {isDraft ? (
+            <Button
+              className='w-full'
+              variant='secondary'>
+              <Rss className='mr-2 w-4 h-4' />
+              Publier
+            </Button>
+          ) : (
+            <>
+              <Button
+                className={buttonVariants({
+                  variant: 'secondary',
+                  className: 'w-full'
+                })}>
+                <CopyIcon className='w-4 h-4 mr-2' />
+                Dupliquer
+              </Button>
+              <Button
+                className={buttonVariants({
+                  variant: 'secondary',
+                  className: 'w-full'
+                })}>
+                <LockIcon className='w-4 h-4 mr-2' />
+                Désactiver
+              </Button>
+            </>
+          )}
+        </div>
       </form>
     </Form>
   );
