@@ -22,16 +22,16 @@ export function EventsFilters() {
             data={[
               [
                 {
-                  label: 'Afficher tout les events',
-                  value: 'all'
-                },
-                {
                   label: 'Afficher que les events en cours',
                   value: 'current'
                 },
                 {
                   label: 'Afficher que les events passés',
                   value: 'past'
+                },
+                {
+                  label: 'Afficher tous les events',
+                  value: 'all'
                 }
               ]
             ]}
