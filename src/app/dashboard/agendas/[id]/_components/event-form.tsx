@@ -20,8 +20,10 @@ import { Textarea } from '~/components/ui/textarea';
 import { TypographyLarge, TypographyMuted } from '~/components/ui/typography';
 import { EventPreview } from './event-preview';
 import type { EventItem } from '~/app/dashboard/_lib/types';
-import { CopyIcon, Rss } from 'lucide-react';
+import { CopyIcon, Lock, Rss } from 'lucide-react';
 import { Badge } from '~/components/ui/badge';
+import { isPast } from 'date-fns';
+import { FileUploader } from '~/components/ui/file-uploader';
 
 interface Props {
   title: string;
@@ -34,7 +36,13 @@ export function EventForm({ title, description, input }: Props) {
     defaultValues: input
   });
 
-  const [, isDraft] = form.watch(['agendaId', 'isDraft']);
+  const [startDate, isDraft, agendaId] = form.watch([
+    'startDate',
+    'isDraft',
+    'agendaId'
+  ]);
+
+  const isPastEvent = startDate && isPast(new Date(startDate));
 
   return (
     <div className='grid grid-cols-2 gap-1'>
@@ -47,6 +55,7 @@ export function EventForm({ title, description, input }: Props) {
             </div>
             <TypographyMuted>{description}</TypographyMuted>
           </div>
+          <FileUploader label='Uploader la couverture de l’événement' />
           <FormField
             control={form.control}
             name='name'
@@ -153,29 +162,42 @@ export function EventForm({ title, description, input }: Props) {
               ]}
             />
           </div>
-          <div className='grid grid-cols-2 gap-2'>
+          <div className='flex items-center gap-2'>
             <Button
               variant={isDraft ? 'secondary' : 'default'}
               className='w-full'>
               Sauvegarder
             </Button>
-            {isDraft ? (
+            {isDraft || !agendaId ? (
               <Button
                 className={buttonVariants({
+                  variant: isDraft ? 'default' : 'secondary',
                   className: 'w-full'
                 })}>
                 <Rss className='w-4 h-4 mr-2' />
                 Publier
               </Button>
             ) : (
-              <Button
-                className={buttonVariants({
-                  variant: 'secondary',
-                  className: 'w-full'
-                })}>
-                <CopyIcon className='w-4 h-4 mr-2' />
-                Dupliquer
-              </Button>
+              <>
+                <Button
+                  className={buttonVariants({
+                    variant: 'secondary',
+                    className: 'w-full'
+                  })}>
+                  <CopyIcon className='w-4 h-4 mr-2' />
+                  Dupliquer
+                </Button>
+                {!isPastEvent && (
+                  <Button
+                    className={buttonVariants({
+                      variant: 'secondary',
+                      className: 'w-full'
+                    })}>
+                    <Lock className='w-4 h-4 mr-2' />
+                    Désactiver
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </form>

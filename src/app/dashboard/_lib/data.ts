@@ -106,7 +106,7 @@ const events: EventItem[] = [
     agendaId: 'a2',
     id: 10,
     name: 'Study smart, not hard',
-    description: ``,
+    description: null,
     cover: null,
     isDraft: true,
     location: null,
