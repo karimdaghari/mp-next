@@ -16,7 +16,10 @@ interface Props {
 
 export function AgendaForm({ input }: Props) {
   const form = useForm<AgendaItem>({
-    defaultValues: input
+    defaultValues: {
+      isDraft: true,
+      ...input
+    }
   });
 
   const [isDraft] = form.watch(['isDraft']);

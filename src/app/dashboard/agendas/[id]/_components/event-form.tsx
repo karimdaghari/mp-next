@@ -33,7 +33,10 @@ interface Props {
 
 export function EventForm({ title, description, input }: Props) {
   const form = useForm<EventItem>({
-    defaultValues: input
+    defaultValues: {
+      isDraft: true,
+      ...input
+    }
   });
 
   const [startDate, isDraft, agendaId] = form.watch([
