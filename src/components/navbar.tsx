@@ -12,23 +12,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList
-} from '~/components/ui/navigation-menu';
 import { TypographyMuted, TypographySmall } from '~/components/ui/typography';
-import { cn } from '~/lib/utils';
 
 export function Navbar() {
-  const menu = [
-    {
-      label: 'Mes agenda',
-      link: '/dashboard/agendas'
-    }
-  ];
-
   return (
     <nav className='p-2 px-4 bg-white border-b flex items-center justify-between shadow-sm'>
       <div className='flex items-center space-x-2'>
@@ -51,7 +37,7 @@ export function Navbar() {
               })}>
               <div className='leading-snug text-right'>
                 <TypographySmall>Dauphine</TypographySmall>
-                <TypographyMuted className='text-xs'>
+                <TypographyMuted className='text-xs hidden lg:block'>
                   Jean Michel Da Silva Da Costa
                 </TypographyMuted>
               </div>
@@ -62,7 +48,7 @@ export function Navbar() {
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent align='end'>
               <DropdownMenuLabel>
                 Jean Michel Da Silva Da Costa
               </DropdownMenuLabel>

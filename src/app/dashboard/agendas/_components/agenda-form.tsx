@@ -43,7 +43,7 @@ export function AgendaForm({ input }: Props) {
           <Label>Description</Label>
           <Textarea rows={5} />
         </div>
-        <div className='flex items-center w-full gap-1'>
+        <div className='flex items-center w-full gap-1 flex-wrap lg:flex-nowrap'>
           <Button className='w-full'>Sauvegarder</Button>
           {isDraft ? (
             <Button

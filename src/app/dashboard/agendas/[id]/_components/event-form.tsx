@@ -48,7 +48,7 @@ export function EventForm({ title, description, input }: Props) {
   const isPastEvent = startDate && isPast(new Date(startDate));
 
   return (
-    <div className='grid grid-cols-2 gap-1'>
+    <div className='grid lg:grid-cols-2 gap-1'>
       <Form {...form}>
         <form className='bg-white p-4 rounded-lg border shadow space-y-4'>
           <div>
@@ -143,7 +143,7 @@ export function EventForm({ title, description, input }: Props) {
                 <Switch id='all-day' />
               </div>
             </div>
-            <div className='grid grid-cols-2 gap-2'>
+            <div className='grid lg:grid-cols-2 gap-2'>
               <div className='flex flex-col space-y-2 w-full'>
                 <Label>Début</Label>
                 <DatePicker />
@@ -165,7 +165,7 @@ export function EventForm({ title, description, input }: Props) {
               ]}
             />
           </div>
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center lg:flex-row flex-col gap-2'>
             <Button
               variant={isDraft ? 'secondary' : 'default'}
               className='w-full'>
@@ -212,8 +212,14 @@ export function EventForm({ title, description, input }: Props) {
             Aperçu de {"l'événement"} tel {"qu'il"} sera affiché sur iPhone
           </TypographyMuted>
         </div>
-        <div className='scale-95'>
+        <div className='lg:scale-95 hidden lg:block'>
           <EventPreview />
+        </div>
+        <div className='lg:hidden mt-4'>
+          <TypographyMuted>
+            Vous êtes sur une version mobile, pour afficher la prévisualisation
+            de {"l'événement"}, veuillez utilisez un écran plus large.
+          </TypographyMuted>
         </div>
       </div>
     </div>

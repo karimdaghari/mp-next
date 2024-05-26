@@ -39,6 +39,7 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage
 } from '~/components/ui/breadcrumb';
+import { ScrollArea } from '~/components/ui/scroll-area';
 
 export default async function Page({
   params: { id }
@@ -75,7 +76,7 @@ export default async function Page({
 
       <Card>
         <CardHeader className='space-y-4 flex-col flex'>
-          <div className='flex items-center'>
+          <div className='flex'>
             <Avatar className='mr-2 h-12 w-12'>
               {logo ? (
                 <AvatarImage
@@ -97,18 +98,22 @@ export default async function Page({
                     })}>
                     Éditer
                   </DialogTrigger>
-                  <DialogContent>
+                  <DialogContent className='max-w-xs sm:max-w-sm lg:max-w-xl'>
                     <DialogHeader>
                       <DialogTitle>Modifier {"l'agenda"}</DialogTitle>
                     </DialogHeader>
-                    <AgendaForm />
+                    <ScrollArea className='max-h-[75dvh] lg:max-h-[80dvh] xl:max-h-full'>
+                      <AgendaForm />
+                    </ScrollArea>
                   </DialogContent>
                 </Dialog>
               </div>
-              <CardDescription>{description}</CardDescription>
+              <CardDescription className='line-clamp-1'>
+                {description}
+              </CardDescription>
             </div>
           </div>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-2'>
             <StatCard
               title='Événements'
               value={events.length}
@@ -128,7 +133,7 @@ export default async function Page({
         </CardHeader>
         <CardContent className='grid gap-4'>
           <EventsFilters />
-          <div className='grid grid-cols-4 gap-2'>
+          <div className='grid lg:grid-cols-2 xl:grid-cols-4 gap-2'>
             <Link
               href={`/dashboard/agendas/${id}/e/new?from=${encodeURIComponent(
                 id
@@ -162,10 +167,10 @@ export default async function Page({
                   1
                 </PaginationLink>
               </PaginationItem>
-              <PaginationItem>
+              <PaginationItem className='hidden lg:block'>
                 <PaginationLink href='#'>2</PaginationLink>
               </PaginationItem>
-              <PaginationItem>
+              <PaginationItem className='hidden lg:block'>
                 <PaginationLink href='#'>3</PaginationLink>
               </PaginationItem>
               <PaginationItem>

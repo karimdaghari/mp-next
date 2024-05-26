@@ -29,7 +29,8 @@ export function DisplayFilters({ data }: Props) {
     <Popover>
       <PopoverTrigger
         className={buttonVariants({
-          variant: 'outline'
+          variant: 'outline',
+          className: 'w-full'
         })}>
         <Settings2 className='w-4 h-4 mr-2' />
         Options {"d'affichage"}

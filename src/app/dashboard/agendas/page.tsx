@@ -32,34 +32,13 @@ export default function DashboardAgendas() {
         description='Gérez vos agendas et vos événements'
       />
       <AgendaFilters />
-      <div className='grid gap-4 my-4'>
-        <div className='grid grid-cols-4 gap-2'>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className='flex flex-col h-full bg-transparent border-dashed'
-                variant='outline'>
-                <Plus />
-                Créer un agenda
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Créer un agenda</DialogTitle>
-                <DialogDescription>
-                  Créez un nouvel agenda pour organiser vos événements.
-                </DialogDescription>
-              </DialogHeader>
-              <AgendaForm />
-            </DialogContent>
-          </Dialog>
-          {data.map((item) => (
-            <AgendaCard
-              key={item.id}
-              {...item}
-            />
-          ))}
-        </div>
+      <div className='grid lg:grid-cols-3 gap-2 my-4'>
+        {data.map((item) => (
+          <AgendaCard
+            key={item.id}
+            {...item}
+          />
+        ))}
       </div>
       <Pagination>
         <PaginationContent>
@@ -73,10 +52,10 @@ export default function DashboardAgendas() {
               1
             </PaginationLink>
           </PaginationItem>
-          <PaginationItem>
+          <PaginationItem className='lg:block hidden'>
             <PaginationLink href='#'>2</PaginationLink>
           </PaginationItem>
-          <PaginationItem>
+          <PaginationItem className='lg:block hidden'>
             <PaginationLink href='#'>3</PaginationLink>
           </PaginationItem>
           <PaginationItem>

@@ -50,7 +50,7 @@ export default function Page({
       </Breadcrumb>
       <div className='grid gap-1 max-w-2xl mx-auto'>
         <div className='space-y-1'>
-          <div className='grid grid-cols-2 gap-1'>
+          <div className='grid lg:grid-cols-2 gap-1'>
             <StatCard
               icon={Heart}
               title='Likes'

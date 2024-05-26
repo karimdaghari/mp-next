@@ -50,6 +50,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '~/components/ui/tooltip';
+import { ScrollArea } from '~/components/ui/scroll-area';
 
 export function AgendaCard({
   id,
@@ -122,7 +123,7 @@ export function AgendaCard({
           </TooltipProvider>
         </div>
         <div className='flex items-center justify-between px-2'>
-          <div>
+          <div className='text-center'>
             <TypographyLarge>
               {eventsNumber === null ? '-' : eventsNumber}
             </TypographyLarge>
@@ -132,7 +133,7 @@ export function AgendaCard({
             orientation='vertical'
             className='inline-block h-12'
           />
-          <div>
+          <div className='text-center'>
             <TypographyLarge>
               {attendanceRate === null ? '-' : `${attendanceRate.toFixed(0)}`}
             </TypographyLarge>
@@ -149,25 +150,27 @@ export function AgendaCard({
             })}>
             Éditer <EditIcon className='w-4 h-4 ml-2' />
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className='max-w-[22rem] lg:max-w-lg'>
             <DialogHeader>
               <DialogTitle>Modifier {"l'agenda"}</DialogTitle>
               <DialogDescription>
                 Finissez de configurer votre agenda avant de le publier.
               </DialogDescription>
             </DialogHeader>
-            <AgendaForm
-              input={{
-                id,
-                name,
-                description,
-                logo,
-                cover,
-                eventsNumber,
-                attendanceRate,
-                isDraft
-              }}
-            />
+            <ScrollArea className='max-h-[75dvh] lg:max-h-full'>
+              <AgendaForm
+                input={{
+                  id,
+                  name,
+                  description,
+                  logo,
+                  cover,
+                  eventsNumber,
+                  attendanceRate,
+                  isDraft
+                }}
+              />
+            </ScrollArea>
           </DialogContent>
         </Dialog>
         {!isDraft && (
@@ -198,20 +201,20 @@ export function AgendaCard({
                 <Rss className='w-4 h-4 mr-2' />
                 Publier
               </DropdownMenuItem>
-            ) : (
-              <DropdownMenuItem>
-                <Lock className='w-4 h-4 mr-2' />
-                Désactiver
-              </DropdownMenuItem>
-            )}
+            ) : null}
             <DropdownMenuItem>
               <CopyIcon className='w-4 h-4 mr-2' />
               Dupliquer
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <TrashIcon className='w-4 h-4 mr-2' />
-              Supprimer
-            </DropdownMenuItem>
+            {!isDraft && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className='text-destructive hover:text-destructive'>
+                  <Lock className='w-4 h-4 mr-2' />
+                  Désactiver
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </CardFooter>

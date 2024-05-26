@@ -15,7 +15,7 @@ import { Label } from '~/components/ui/label';
 export default function LoginForm() {
   return (
     <div className='h-full flex flex-col justify-center w-full items-center'>
-      <div className='w-full max-w-md flex flex-col gap-4 justify-center items-center'>
+      <div className='w-full max-w-md flex flex-col gap-4 justify-center items-center p-4 lg:p-0'>
         <Logo className='h-10 w-fit' />
         <Card className='w-full'>
           <CardHeader>

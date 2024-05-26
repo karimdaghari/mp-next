@@ -10,18 +10,20 @@ import { DisplayFilters } from './display-filters';
 
 export function AgendaFilters() {
   return (
-    <section className='flex w-full justify-between'>
-      <div className='flex items-center space-x-2'>
-        <div className='w-[300px]'>
+    <section className='flex w-full flex-col lg:flex-row lg:justify-between gap-2 lg:gap-0'>
+      <div className='flex items-center lg:flex-row flex-col gap-2'>
+        <div className='w-full lg:w-[300px]'>
           <SearchInput placeholder='Rechercher vos agendas...' />
         </div>
-        <DisplayFilters />
+        <div className='lg:w-fit w-full'>
+          <DisplayFilters />
+        </div>
       </div>
 
       <Select>
         <SelectTrigger
           id='sort'
-          className='w-[260px]'>
+          className='w-full lg:w-[260px]'>
           <SelectValue placeholder='Trier par' />
         </SelectTrigger>
         <SelectContent>

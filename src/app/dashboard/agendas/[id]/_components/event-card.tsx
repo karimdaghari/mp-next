@@ -243,22 +243,20 @@ export function EventCard({
                 <Rss className='w-4 h-4 mr-2' />
                 Publier
               </DropdownMenuItem>
-            ) : (
-              !isPastEvent && (
-                <DropdownMenuItem>
-                  <Lock className='w-4 h-4 mr-2' />
-                  Désactiver
-                </DropdownMenuItem>
-              )
-            )}
+            ) : null}
             <DropdownMenuItem>
               <CopyIcon className='w-4 h-4 mr-2' />
               Dupliquer
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <TrashIcon className='w-4 h-4 mr-2' />
-              Supprimer
-            </DropdownMenuItem>
+            {!isDraft && !isPastEvent && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className='text-destructive hover:text-destructive'>
+                  <Lock className='w-4 h-4 mr-2' />
+                  Désactiver
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </CardFooter>
