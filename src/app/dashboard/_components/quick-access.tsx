@@ -1,5 +1,5 @@
 'use client';
-import { ArrowUpRight, CalendarFold, SearchIcon } from 'lucide-react';
+import { ArrowUpRight, CalendarRange, SearchIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Button, buttonVariants } from '~/components/ui/button';
@@ -62,7 +62,7 @@ export function QuickAccess({ data }: Props) {
                 heading={
                   <div className='flex items-center justify-between w-full'>
                     <span className='flex items-center gap-2'>
-                      <CalendarFold className='h-4 w-4' />
+                      <CalendarRange className='h-4 w-4' />
                       {agenda.name}
                     </span>
                     <Link

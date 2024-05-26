@@ -18,7 +18,7 @@ import { TypographyMuted, TypographySmall } from '~/components/ui/typography';
 export function Navbar() {
   return (
     <nav className='p-2 px-4 bg-white border-b flex items-center justify-between shadow-sm'>
-      <Link href='/dashboard/agendas'>
+      <Link href='/dashboard'>
         <Logo
           className={buttonVariants({
             variant: 'ghost',
