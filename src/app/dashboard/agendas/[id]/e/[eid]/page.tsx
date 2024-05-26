@@ -1,7 +1,7 @@
 import { TypographyLarge, TypographyMuted } from '~/components/ui/typography';
 import { EventPreview } from '../../_components/event-preview';
 import { StatCard } from '~/app/dashboard/_components/stat-card';
-import { Heart, Users } from 'lucide-react';
+import { Heart, HistoryIcon, Users } from 'lucide-react';
 import Link from 'next/link';
 import {
   Breadcrumb,
@@ -12,6 +12,8 @@ import {
 } from '~/components/ui/breadcrumb';
 import { getEvent } from '~/app/dashboard/_lib/data';
 import { redirect } from 'next/navigation';
+import { ScrollArea } from '~/components/ui/scroll-area';
+import { HistoryList } from '../../../_components/history-list';
 
 export default function Page({
   params: { id, eid }
@@ -27,7 +29,7 @@ export default function Page({
     redirect('/404');
   }
 
-  const { agenda, name, description } = event;
+  const { agenda, name, description, history } = event;
 
   return (
     <>
@@ -48,7 +50,7 @@ export default function Page({
           <BreadcrumbItem>{name}</BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className='grid gap-1 max-w-2xl mx-auto'>
+      <div className='grid gap-1 lg:grid-cols-2 lg:mx-auto'>
         <div className='space-y-1'>
           <div className='grid lg:grid-cols-2 gap-1'>
             <StatCard
@@ -71,6 +73,23 @@ export default function Page({
               <EventPreview />
             </div>
           </div>
+        </div>
+        <div className='bg-white border rounded-lg p-4'>
+          <div className='mb-4'>
+            <TypographyLarge className='flex items-center'>
+              <HistoryIcon className='w-4 h-4 mr-1' />
+              Historique de {"l'événement"}
+            </TypographyLarge>
+          </div>
+          <ScrollArea className='h-[99dvh]'>
+            {history && history?.length > 0 ? (
+              <HistoryList data={history} />
+            ) : (
+              <TypographyMuted>
+                Aucune modification {"n'a"} été effectuée sur cet événement.
+              </TypographyMuted>
+            )}
+          </ScrollArea>
         </div>
       </div>
     </>

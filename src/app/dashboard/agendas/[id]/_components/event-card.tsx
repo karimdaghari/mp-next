@@ -1,16 +1,16 @@
+'use client';
 import {
   ArrowRight,
   CalendarClockIcon,
   CopyIcon,
   EditIcon,
   ExternalLink,
-  Globe,
+  HistoryIcon,
   Info,
   Lock,
   MapPin,
   MoreVerticalIcon,
-  Rss,
-  TrashIcon
+  Rss
 } from 'lucide-react';
 import { Badge } from '~/components/ui/badge';
 import { buttonVariants } from '~/components/ui/button';
@@ -49,6 +49,16 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '~/components/ui/tooltip';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '~/components/ui/sheet';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
+import { HistoryList } from '../../_components/history-list';
 
 export function EventCard({
   id,
@@ -63,7 +73,8 @@ export function EventCard({
   subscribers,
   isDraft = false,
   agendaId,
-  categories
+  categories,
+  history
 }: Props) {
   let formattedDate = null;
 
@@ -227,38 +238,70 @@ export function EventCard({
             Éditer <EditIcon className='w-4 h-4 ml-2' />
           </Link>
         )}
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            className={buttonVariants({
-              variant: 'ghost',
-              size: 'sm'
-            })}>
-            <MoreVerticalIcon className='w-4 h-4' />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {isDraft ? (
-              <DropdownMenuItem>
-                <Rss className='w-4 h-4 mr-2' />
-                Publier
-              </DropdownMenuItem>
-            ) : null}
-            <DropdownMenuItem>
-              <CopyIcon className='w-4 h-4 mr-2' />
-              Dupliquer
-            </DropdownMenuItem>
-            {!isDraft && !isPastEvent && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className='text-destructive hover:text-destructive'>
-                  <Lock className='w-4 h-4 mr-2' />
-                  Désactiver
+        <Sheet>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={buttonVariants({
+                variant: 'ghost',
+                size: 'sm'
+              })}>
+              <MoreVerticalIcon className='w-4 h-4' />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {isDraft ? (
+                <DropdownMenuItem>
+                  <Rss className='w-4 h-4 mr-2' />
+                  Publier
                 </DropdownMenuItem>
-              </>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+              ) : null}
+              <DropdownMenuItem>
+                <CopyIcon className='w-4 h-4 mr-2' />
+                Dupliquer
+              </DropdownMenuItem>
+              <SheetTrigger asChild>
+                <DropdownMenuItem>
+                  <HistoryIcon className='w-4 h-4 mr-2' />
+                  Historique
+                </DropdownMenuItem>
+              </SheetTrigger>
+              <DropdownMenuItem>
+                <CopyIcon className='w-4 h-4 mr-2' />
+                Dupliquer
+              </DropdownMenuItem>
+              {!isDraft && !isPastEvent && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className='text-destructive hover:text-destructive'>
+                    <Lock className='w-4 h-4 mr-2' />
+                    Désactiver
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <SheetContent>
+            <SheetHeader className='mb-8'>
+              <div>
+                <SheetTitle className='flex items-center'>
+                  <HistoryIcon className='w-4 h-4 mr-1' />
+                  Historique de {"l'événement"}
+                </SheetTitle>
+                <SheetDescription>{name}</SheetDescription>
+              </div>
+            </SheetHeader>
+            <ScrollArea className='h-[calc(100dvh-8rem)]'>
+              {history && history?.length > 0 ? (
+                <HistoryList data={history} />
+              ) : (
+                <TypographyMuted>
+                  Aucune modification {"n'a"} été effectuée sur cet événement.
+                </TypographyMuted>
+              )}
+            </ScrollArea>
+          </SheetContent>
+        </Sheet>
       </CardFooter>
     </Card>
   );
