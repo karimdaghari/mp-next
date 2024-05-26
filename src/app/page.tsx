@@ -37,7 +37,7 @@ export default function LoginForm() {
           </CardContent>
           <CardFooter className='grid gap-2'>
             <Link
-              href='/dashboard/agendas'
+              href='/dashboard'
               className={buttonVariants({
                 className: 'w-full'
               })}>
