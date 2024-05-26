@@ -94,7 +94,7 @@ export function AgendaOptions({ history, name }: Props) {
               <SheetDescription>{name}</SheetDescription>
             </div>
           </SheetHeader>
-          <ScrollArea className='lg:h-[calc(100dvh-8rem)]'>
+          <ScrollArea className='h-[calc(100dvh-8rem)]'>
             {history && history?.length > 0 ? (
               <HistoryList data={history} />
             ) : (
