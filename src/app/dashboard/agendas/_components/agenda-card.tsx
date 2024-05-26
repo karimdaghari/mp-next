@@ -2,10 +2,11 @@ import {
   ArrowRight,
   CopyIcon,
   EditIcon,
+  History,
+  HistoryIcon,
   Lock,
   MoreVerticalIcon,
-  Rss,
-  TrashIcon
+  Rss
 } from 'lucide-react';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
@@ -51,6 +52,15 @@ import {
   TooltipTrigger
 } from '~/components/ui/tooltip';
 import { ScrollArea } from '~/components/ui/scroll-area';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '~/components/ui/sheet';
+import { HistoryList } from './history-list';
 
 export function AgendaCard({
   id,
@@ -60,7 +70,8 @@ export function AgendaCard({
   cover,
   eventsNumber,
   attendanceRate,
-  isDraft = false
+  isDraft = false,
+  history
 }: Props) {
   return (
     <Card className='duration-500 hover:shadow-xl transition-all ease-in-out'>
@@ -185,38 +196,66 @@ export function AgendaCard({
             <ArrowRight className='ml-2 w-4 h-4' />
           </Link>
         )}
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            className={buttonVariants({
-              variant: 'ghost',
-              size: 'sm'
-            })}>
-            <MoreVerticalIcon className='w-4 h-4' />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {isDraft ? (
-              <DropdownMenuItem>
-                <Rss className='w-4 h-4 mr-2' />
-                Publier
-              </DropdownMenuItem>
-            ) : null}
-            <DropdownMenuItem>
-              <CopyIcon className='w-4 h-4 mr-2' />
-              Dupliquer
-            </DropdownMenuItem>
-            {!isDraft && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className='text-destructive hover:text-destructive'>
-                  <Lock className='w-4 h-4 mr-2' />
-                  Désactiver
+        <Sheet>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={buttonVariants({
+                variant: 'ghost',
+                size: 'sm'
+              })}>
+              <MoreVerticalIcon className='w-4 h-4' />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {isDraft ? (
+                <DropdownMenuItem>
+                  <Rss className='w-4 h-4 mr-2' />
+                  Publier
                 </DropdownMenuItem>
-              </>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+              ) : null}
+              <DropdownMenuItem>
+                <CopyIcon className='w-4 h-4 mr-2' />
+                Dupliquer
+              </DropdownMenuItem>
+              <SheetTrigger asChild>
+                <DropdownMenuItem>
+                  <History className='w-4 h-4 mr-2' />
+                  Historique
+                </DropdownMenuItem>
+              </SheetTrigger>
+              {!isDraft && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className='text-destructive hover:text-destructive'>
+                    <Lock className='w-4 h-4 mr-2' />
+                    Désactiver
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <SheetContent>
+            <SheetHeader className='mb-8'>
+              <div>
+                <SheetTitle className='flex items-center'>
+                  <HistoryIcon className='w-4 h-4 mr-1' />
+                  Historique de {"l'agenda"}
+                </SheetTitle>
+                <SheetDescription>{name}</SheetDescription>
+              </div>
+            </SheetHeader>
+            <ScrollArea className='lg:h-[calc(100dvh-8rem)]'>
+              {history && history?.length > 0 ? (
+                <HistoryList data={history} />
+              ) : (
+                <TypographyMuted>
+                  Aucune modification {"n'a"} été effectuée sur cet agenda.
+                </TypographyMuted>
+              )}
+            </ScrollArea>
+          </SheetContent>
+        </Sheet>
       </CardFooter>
     </Card>
   );

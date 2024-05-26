@@ -1,4 +1,57 @@
-import type { AgendaItem, EventItem } from './types';
+import type { Admin, AgendaItem, EventItem, HistoryItem } from './types';
+
+const admins: Admin[] = [
+  {
+    id: 1,
+    name: 'Jean Michel Da Silva Da Costa',
+    email: 'jmd@example.com',
+    avatar:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXia5ZUF0lUUa3JrMJzVQ2r-ojR8D6E9tZnd6D-6teRQ&s'
+  },
+  {
+    id: 2,
+    name: 'Jean-Michel Da Silva Da Costa',
+    email: 'jmd@example.com',
+    avatar:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXia5ZUF0lUUa3JrMJzVQ2r-ojR8D6E9tZnd6D-6teRQ&s'
+  }
+];
+
+const history: HistoryItem[] = [
+  {
+    id: 1,
+    adminId: 1,
+    action: 'Créer',
+    date: '2023-05-22T09:00:00Z'
+  },
+  {
+    id: 2,
+    adminId: 1,
+    action: 'Modifier logo',
+    date: '2023-05-22T09:00:00Z'
+  },
+  {
+    id: 3,
+    adminId: 2,
+    action: 'Modifier description',
+    date: '2023-05-22T09:00:00Z'
+  },
+  {
+    id: 4,
+    adminId: 2,
+    action: 'Supprimer',
+    date: '2023-05-22T09:00:00Z'
+  },
+  {
+    id: 5,
+    adminId: 1,
+    action: 'Publier',
+    date: '2023-05-22T09:00:00Z'
+  }
+].map((history) => ({
+  ...history,
+  admin: admins.find((admin) => admin.id === history.adminId)!
+}));
 
 const events: EventItem[] = [
   {
@@ -16,7 +69,8 @@ const events: EventItem[] = [
     endDate: '2024-05-23T17:00:00Z',
     categories: ['Colloque'],
     likes: 100,
-    subscribers: 250
+    subscribers: 250,
+    history
   },
   {
     agendaId: 'a1',
@@ -33,7 +87,8 @@ const events: EventItem[] = [
     endDate: '2024-05-27T17:00:00Z',
     categories: ['Networking'],
     likes: 90,
-    subscribers: 220
+    subscribers: 220,
+    history
   },
   {
     agendaId: 'a2',
@@ -50,7 +105,8 @@ const events: EventItem[] = [
     endDate: '2024-05-22T22:00:00Z',
     categories: [],
     likes: 120,
-    subscribers: 320
+    subscribers: 320,
+    history
   },
   {
     agendaId: 'a2',
@@ -67,7 +123,8 @@ const events: EventItem[] = [
     endDate: '2024-05-22T15:00:00Z',
     categories: ['Conférence'],
     likes: 120,
-    subscribers: 320
+    subscribers: 320,
+    history
   },
   {
     agendaId: 'a2',
@@ -84,7 +141,8 @@ const events: EventItem[] = [
     endDate: '2024-03-06T15:00:00Z',
     categories: ['Atelier'],
     likes: 120,
-    subscribers: 320
+    subscribers: 320,
+    history
   },
   {
     agendaId: 'a2',
@@ -100,7 +158,8 @@ const events: EventItem[] = [
     endDate: '2024-02-07T12:00:00Z',
     categories: ['Business'],
     likes: 120,
-    subscribers: 320
+    subscribers: 320,
+    history
   },
   {
     agendaId: 'a2',
@@ -115,7 +174,8 @@ const events: EventItem[] = [
     endDate: null,
     categories: [],
     likes: null,
-    subscribers: null
+    subscribers: null,
+    history
   }
 ];
 
@@ -139,7 +199,9 @@ const agendas: AgendaItem[] = [
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXia5ZUF0lUUa3JrMJzVQ2r-ojR8D6E9tZnd6D-6teRQ&s',
     eventsNumber: 10,
     attendanceRate: 75.5,
-    events: getAgendaEvents('a1')
+    events: getAgendaEvents('a1'),
+    history,
+    admins
   },
   {
     id: 'a2',
@@ -151,7 +213,9 @@ const agendas: AgendaItem[] = [
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpoBSZdmbvoM6_U90DNZ9Kbcv43bL6d8skLJPdcDH1Zg&s',
     eventsNumber: 5,
     attendanceRate: 60.3,
-    events: getAgendaEvents('a2')
+    events: getAgendaEvents('a2'),
+    history,
+    admins
   },
   {
     id: 'a3',
@@ -162,7 +226,9 @@ const agendas: AgendaItem[] = [
     eventsNumber: null,
     attendanceRate: null,
     isDraft: true,
-    events: getAgendaEvents('a3')
+    events: getAgendaEvents('a3'),
+    history,
+    admins
   }
 ];
 

@@ -11,14 +11,6 @@ import { CalendarPlus, PlusIcon, Ticket, UserCheck2 } from 'lucide-react';
 import { EventCard } from './_components/event-card';
 import Link from 'next/link';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '~/components/ui/dialog';
-import { AgendaForm } from '../_components/agenda-form';
-import {
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -36,12 +28,11 @@ import {
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage
+  BreadcrumbSeparator
 } from '~/components/ui/breadcrumb';
-import { ScrollArea } from '~/components/ui/scroll-area';
+import { AgendaOptions } from './agenda-options';
 
-export default async function Page({
+export default function Page({
   params: { id }
 }: {
   params: {
@@ -54,7 +45,7 @@ export default async function Page({
     redirect('/404');
   }
 
-  const { events, name, description, logo } = data;
+  const { events, name, description, logo, history } = data;
 
   return (
     <div className='space-y-4'>
@@ -89,26 +80,12 @@ export default async function Page({
             <div>
               <div className='flex items-center'>
                 <CardTitle>{name}</CardTitle>
-                <Dialog>
-                  <DialogTrigger
-                    className={buttonVariants({
-                      variant: 'secondary',
-                      size: 'sm',
-                      className: 'ml-2'
-                    })}>
-                    Éditer
-                  </DialogTrigger>
-                  <DialogContent className='max-w-xs sm:max-w-sm lg:max-w-xl'>
-                    <DialogHeader>
-                      <DialogTitle>Modifier {"l'agenda"}</DialogTitle>
-                    </DialogHeader>
-                    <ScrollArea className='max-h-[75dvh] lg:max-h-[80dvh] xl:max-h-full'>
-                      <AgendaForm />
-                    </ScrollArea>
-                  </DialogContent>
-                </Dialog>
+                <AgendaOptions
+                  name={name}
+                  history={history}
+                />
               </div>
-              <CardDescription className='line-clamp-1'>
+              <CardDescription className='line-clamp-2'>
                 {description}
               </CardDescription>
             </div>

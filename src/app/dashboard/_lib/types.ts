@@ -1,9 +1,24 @@
+export interface Admin {
+  id: number;
+  name: string;
+  email: string;
+  avatar?: string | null;
+}
+
+export interface HistoryItem {
+  id: number;
+  adminId: number;
+  action: string;
+  date: string | Date;
+  admin: Admin;
+}
 interface Shared {
   id: number | string;
   name: string;
   description?: string | null;
   cover?: string | null;
   isDraft?: boolean;
+  history?: HistoryItem[];
 }
 
 export interface EventItem extends Shared {
@@ -22,4 +37,5 @@ export interface AgendaItem extends Shared {
   eventsNumber: number | null;
   attendanceRate: number | null;
   events: EventItem[];
+  admins?: Admin[];
 }
