@@ -69,9 +69,14 @@ export default function Page({
               <TypographyLarge>{name}</TypographyLarge>
               <TypographyMuted>{description}</TypographyMuted>
             </div>
-            <div className='scale-90'>
+            <div className='scale-90 hidden lg:block'>
               <EventPreview />
             </div>
+            <TypographyMuted className='lg:hidden mt-4 lg:mt-0'>
+              Vous êtes sur une version mobile, pour afficher la
+              prévisualisation de {"l'événement"}, veuillez utiliser un écran
+              plus large.
+            </TypographyMuted>
           </div>
         </div>
         <div className='bg-white border rounded-lg p-4'>
