@@ -33,10 +33,23 @@ export interface EventItem extends Shared {
   subscribers?: number | null;
 }
 
+export interface CategoryItem {
+  id: number;
+  name: string;
+  agendas: AgendaItem[];
+  rootId?: number | null;
+  root?: CategoryItem | null;
+}
+
+export interface CategoryTree extends CategoryItem {
+  children?: CategoryItem[];
+}
+
 export interface AgendaItem extends Shared {
   logo?: string | null;
   eventsNumber: number | null;
   attendanceRate: number | null;
   events: EventItem[];
   admins?: Admin[];
+  categories: CategoryItem[];
 }

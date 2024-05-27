@@ -1,4 +1,56 @@
-import type { Admin, AgendaItem, EventItem, HistoryItem } from './types';
+import type {
+  Admin,
+  AgendaItem,
+  CategoryItem,
+  CategoryTree,
+  EventItem,
+  HistoryItem
+} from './types';
+
+let categories: CategoryItem[] = [
+  {
+    id: 1,
+    name: 'Vie des campus',
+    agendas: [],
+    rootId: null
+  },
+  {
+    id: 2,
+    name: 'Activités culturelles et artistiques',
+    agendas: [],
+    rootId: 1
+  },
+  {
+    id: 3,
+    name: 'Ateliers',
+    agendas: [],
+    rootId: 1
+  },
+  {
+    id: 4,
+    name: 'Formations',
+    agendas: [],
+    rootId: null
+  },
+  {
+    id: 5,
+    name: 'Journées portes ouvertes',
+    agendas: [],
+    rootId: 4
+  },
+  {
+    id: 6,
+    name: 'Masters',
+    agendas: [],
+    rootId: 4
+  },
+  {
+    id: 7,
+    name: 'INFOS PRATIQUES - ACTUALITES - GRANDS RDV',
+    agendas: [],
+    rootId: 6
+  }
+];
 
 const admins: Admin[] = [
   {
@@ -193,6 +245,8 @@ const getAgendaEvents = (agendaId: string) =>
         : 0
     );
 
+const getCategoryById = (id: number) => categories.find((c) => c.id === id);
+
 const agendas: AgendaItem[] = [
   {
     id: 'a1',
@@ -206,7 +260,8 @@ const agendas: AgendaItem[] = [
     attendanceRate: 75.5,
     events: getAgendaEvents('a1'),
     history,
-    admins
+    admins,
+    categories: [1].map(getCategoryById) as CategoryItem[]
   },
   {
     id: 'a2',
@@ -220,7 +275,8 @@ const agendas: AgendaItem[] = [
     attendanceRate: 60.3,
     events: getAgendaEvents('a2'),
     history,
-    admins
+    admins,
+    categories: [2].map(getCategoryById) as CategoryItem[]
   },
   {
     id: 'a3',
@@ -233,9 +289,40 @@ const agendas: AgendaItem[] = [
     isDraft: true,
     events: getAgendaEvents('a3'),
     history,
-    admins
+    admins,
+    categories: [2].map(getCategoryById) as CategoryItem[]
   }
 ];
+
+categories = categories
+  .map((category) => {
+    const relatedAgendas = agendas.filter((agenda) =>
+      agenda.categories.includes(category)
+    );
+    category.agendas = relatedAgendas;
+    return category;
+  })
+  .map((category) => {
+    const root = categories.find((c) => c.id === category.rootId);
+    if (root) {
+      root.root = category;
+    }
+    return category;
+  });
+
+// build a tree from the categories:
+const tree = categories.reduce((acc, category) => {
+  const parent = acc.find((c) => c.id === category.rootId);
+  if (parent) {
+    if (!parent.children) {
+      parent.children = [];
+    }
+    parent.children?.push(category);
+  } else {
+    acc.push(category);
+  }
+  return acc;
+}, [] as CategoryTree[]);
 
 export const getAgenda = (id: string) => {
   const agenda = agendas.find((item) => item.id === id);
@@ -263,3 +350,9 @@ export const getEvent = (eventId: number) => {
 };
 
 export const getHistory = () => history;
+
+export const getAllCategories = () => categories;
+
+export const getAllCategoriesTree = () => tree;
+
+export const getAllAdmins = () => admins;

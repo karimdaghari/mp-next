@@ -30,7 +30,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator
 } from '~/components/ui/breadcrumb';
-import { AgendaOptions } from './agenda-options';
+import { AgendaOptions } from './_components/agenda-options';
 
 export default function Page({
   params: { id }

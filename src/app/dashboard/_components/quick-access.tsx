@@ -44,7 +44,7 @@ export function QuickAccess({ data }: Props) {
       <Button
         size='sm'
         variant='outline'
-        className='w-full flex items-center justify-between shadow-sm'
+        className='w-full flex items-center justify-between shadow'
         onClick={() => setOpen(true)}>
         <div className='flex items-center text-gray-500'>
           <SearchIcon className='h-4 w-4 lg:mr-2' />

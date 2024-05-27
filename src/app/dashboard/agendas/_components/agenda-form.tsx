@@ -11,7 +11,7 @@ import type { AgendaItem } from '../../_lib/types';
 import { CopyIcon, LockIcon, Rss } from 'lucide-react';
 
 interface Props {
-  input?: Omit<AgendaItem, 'events'>;
+  input?: Omit<AgendaItem, 'events' | 'categories'>;
 }
 
 export function AgendaForm({ input }: Props) {

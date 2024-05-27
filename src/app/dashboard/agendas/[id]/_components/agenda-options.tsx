@@ -4,12 +4,14 @@ import {
   EditIcon,
   History,
   HistoryIcon,
-  MoreVertical
+  MoreVertical,
+  UsersIcon
 } from 'lucide-react';
 import { buttonVariants } from '~/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle
 } from '~/components/ui/dialog';
@@ -26,15 +28,16 @@ import {
   SheetHeader,
   SheetTitle
 } from '~/components/ui/sheet';
-import { AgendaForm } from '../_components/agenda-form';
+import { AgendaForm } from '../../_components/agenda-form';
 import {
   HistoryList,
   type Props as HistoryListProps
-} from '../_components/history-list';
+} from '../../_components/history-list';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import { useState } from 'react';
-import type { AgendaItem } from '../../_lib/types';
+import type { AgendaItem } from '../../../_lib/types';
 import { TypographyMuted } from '~/components/ui/typography';
+import { AdminList } from '../../_components/admin-list';
 
 interface Props {
   name: string;
@@ -44,6 +47,7 @@ interface Props {
 export function AgendaOptions({ history, name }: Props) {
   const [showHistory, setShowHistory] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
   return (
     <>
       <Sheet
@@ -61,7 +65,7 @@ export function AgendaOptions({ history, name }: Props) {
               })}>
               <MoreVertical className='w-4 h-4' />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align='start'>
+            <DropdownMenuContent align='end'>
               <DropdownMenuItem onSelect={() => setShowEdit(true)}>
                 <EditIcon className='w-4 h-4 mr-2' />
                 Modifier {"l'agenda"}
@@ -72,6 +76,14 @@ export function AgendaOptions({ history, name }: Props) {
                 }}>
                 <HistoryIcon className='w-4 h-4 mr-2' />
                 Historique de {"l'agenda"}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  setShowAdmin(true);
+                  e.stopPropagation();
+                }}>
+                <UsersIcon className='w-4 h-4 mr-2' />
+                Administrateurs
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -105,6 +117,21 @@ export function AgendaOptions({ history, name }: Props) {
           </ScrollArea>
         </SheetContent>
       </Sheet>
+      <Dialog
+        open={showAdmin}
+        onOpenChange={setShowAdmin}>
+        <DialogContent className='max-w-2xl'>
+          <DialogHeader>
+            <DialogTitle>Administrateurs</DialogTitle>
+            <DialogDescription>
+              Vous pouvez modifier les administrateurs de votre agenda.
+            </DialogDescription>
+          </DialogHeader>
+          <ScrollArea className='max-h-[75dvh] lg:max-h-full'>
+            <AdminList />
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

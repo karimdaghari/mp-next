@@ -1,3 +1,4 @@
+'use client';
 import {
   ArrowRight,
   CopyIcon,
@@ -6,7 +7,8 @@ import {
   HistoryIcon,
   Lock,
   MoreVerticalIcon,
-  Rss
+  Rss,
+  UsersIcon
 } from 'lucide-react';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
@@ -61,6 +63,8 @@ import {
   SheetTrigger
 } from '~/components/ui/sheet';
 import { HistoryList } from './history-list';
+import { AdminList } from './admin-list';
+import { useState } from 'react';
 
 export function AgendaCard({
   id,
@@ -73,85 +77,113 @@ export function AgendaCard({
   isDraft = false,
   history
 }: Props) {
+  const [open, setOpen] = useState(false);
   return (
     <Card className='duration-500 hover:shadow-xl transition-all ease-in-out'>
-      <CardHeader className='p-0 relative mb-12 space-y-0'>
-        {isDraft && (
-          <Badge className='top-1 right-1 absolute z-20'>Brouillon</Badge>
-        )}
-        {cover ? (
-          <img
-            alt={name}
-            src={cover}
-            className={cn(
-              'object-cover h-52 w-full rounded-t-lg aspect-2/3 border-b',
-              isDraft && 'grayscale'
+      <div className='flex items-center space-x-3'>
+        <CardHeader className='relative space-y-0 p-0 pl-4'>
+          {cover ? (
+            <img
+              alt={name}
+              src={cover}
+              className={cn(
+                'object-cover h-32 w-32 rounded-lg aspect-1/1 border',
+                isDraft && 'grayscale'
+              )}
+            />
+          ) : (
+            <div className='h-32 w-24 bg-muted rounded-lg aspect-1/1 border' />
+          )}
+          <div className='absolute flex items-center w-full justify-end -bottom-3'>
+            <Avatar className='h-8 w-8 border'>
+              <AvatarImage src={logo ?? undefined} />
+              <AvatarFallback>
+                <TypographyLarge>{name[0]}</TypographyLarge>
+              </AvatarFallback>
+            </Avatar>
+          </div>
+        </CardHeader>
+        <CardContent className='grid gap-2 p-4 w-full'>
+          <div>
+            {isDraft ? (
+              <Badge className='w-fit mb-1.5'>Brouillon</Badge>
+            ) : (
+              <div className='h-5 mb-2.5' />
             )}
-          />
-        ) : (
-          <div className='h-52 w-full bg-gray-200 rounded-t-lg aspect-2/3 border-b' />
-        )}
-        <div className='absolute w-full flex items-center justify-center -bottom-9'>
-          <Avatar className='h-20 w-20 border'>
-            {logo ? <AvatarImage src={logo} /> : null}
-            <AvatarFallback>
-              <TypographyLarge>{name[0]}</TypographyLarge>
-            </AvatarFallback>
-          </Avatar>
-          {isDraft ? (
-            <Badge className='absolute -bottom-2'>Brouillon</Badge>
-          ) : null}
-        </div>
-      </CardHeader>
-      <CardContent className='grid gap-2'>
-        <div>
-          <TooltipProvider delayDuration={0}>
-            <Tooltip>
-              <TooltipTrigger className='cursor-auto text-left'>
-                <CardTitle className='text-lg line-clamp-1'>{name}</CardTitle>
-              </TooltipTrigger>
-              <TooltipContent className='max-w-40'>
-                <TypographySmall>Nom</TypographySmall>
-                <TypographyMuted>{name}</TypographyMuted>
-              </TooltipContent>
-            </Tooltip>
+            <div className='space-y-0 flex flex-col'>
+              <TooltipProvider delayDuration={0}>
+                <Tooltip>
+                  <TooltipTrigger className='cursor-auto text-left'>
+                    <div>
+                      <CardTitle className='text-lg line-clamp-1'>
+                        {name}
+                      </CardTitle>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className='max-w-40'>
+                    <TypographySmall>Nom</TypographySmall>
+                    <TypographyMuted>{name}</TypographyMuted>
+                  </TooltipContent>
+                </Tooltip>
 
-            <Tooltip>
-              <TooltipTrigger className='cursor-auto text-left'>
-                <CardDescription className='line-clamp-2'>
-                  {description ??
-                    "Aucune description n'a été renseignée pour cet agenda. Veuillez en ajouter une."}
-                </CardDescription>
-              </TooltipTrigger>
-              <TooltipContent className='max-w-80'>
-                <TypographySmall>Description</TypographySmall>
-                <TypographyMuted>
-                  {description ??
-                    "Aucune description n'a été renseignée pour cet agenda. Veuillez en ajouter une."}
-                </TypographyMuted>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-        <div className='flex items-center justify-between px-2'>
-          <div className='text-center'>
-            <TypographyLarge>
-              {eventsNumber === null ? '-' : eventsNumber}
-            </TypographyLarge>
-            <TypographySmall>Événements</TypographySmall>
+                <Tooltip>
+                  <TooltipTrigger className='cursor-auto text-left'>
+                    <CardDescription className='line-clamp-2 h-10'>
+                      {description ??
+                        "Aucune description n'a été renseignée pour cet agenda. Veuillez en ajouter une."}
+                    </CardDescription>
+                  </TooltipTrigger>
+                  <TooltipContent className='max-w-80'>
+                    <TypographySmall>Description</TypographySmall>
+                    <TypographyMuted>
+                      {description ??
+                        "Aucune description n'a été renseignée pour cet agenda. Veuillez en ajouter une."}
+                    </TypographyMuted>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </div>
-          <Separator
-            orientation='vertical'
-            className='inline-block h-12'
-          />
-          <div className='text-center'>
-            <TypographyLarge>
-              {attendanceRate === null ? '-' : `${attendanceRate.toFixed(0)}`}
-            </TypographyLarge>
-            <TypographySmall>Participants</TypographySmall>
+          <div className='flex items-center justify-between xl:flex-nowrap flex-wrap px-2'>
+            <div>
+              <TypographyLarge>
+                {eventsNumber === null ? '-' : eventsNumber}
+              </TypographyLarge>
+              <TypographySmall>Events</TypographySmall>
+            </div>
+            <Separator
+              orientation='vertical'
+              className='inline-block h-12'
+            />
+            <div>
+              <TypographyLarge>
+                {attendanceRate === null ? '-' : `${attendanceRate.toFixed(0)}`}
+              </TypographyLarge>
+              <TypographySmall>Abonnés</TypographySmall>
+            </div>
+            <Separator
+              orientation='vertical'
+              className='inline-block h-12'
+            />
+            <div>
+              <TypographyLarge>
+                {attendanceRate === null ? '-' : `${attendanceRate.toFixed(0)}`}
+              </TypographyLarge>
+              <TypographySmall>Suivi</TypographySmall>
+            </div>
+            <Separator
+              orientation='vertical'
+              className='inline-block h-12'
+            />
+            <div>
+              <TypographyLarge>
+                {attendanceRate === null ? '-' : `${attendanceRate.toFixed(0)}`}
+              </TypographyLarge>
+              <TypographySmall>Partages</TypographySmall>
+            </div>
           </div>
-        </div>
-      </CardContent>
+        </CardContent>
+      </div>
       <CardFooter className='p-4 flex items-center gap-1 border-t'>
         <Dialog>
           <DialogTrigger
@@ -224,6 +256,14 @@ export function AgendaCard({
                   Historique
                 </DropdownMenuItem>
               </SheetTrigger>
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  setOpen(true);
+                  e.stopPropagation();
+                }}>
+                <UsersIcon className='w-4 h-4 mr-2' />
+                Administrateurs
+              </DropdownMenuItem>
               {!isDraft && (
                 <>
                   <DropdownMenuSeparator />
@@ -256,6 +296,21 @@ export function AgendaCard({
             </ScrollArea>
           </SheetContent>
         </Sheet>
+        <Dialog
+          open={open}
+          onOpenChange={setOpen}>
+          <DialogContent className='max-w-2xl'>
+            <DialogHeader>
+              <DialogTitle>Administrateurs</DialogTitle>
+              <DialogDescription>
+                Vous pouvez modifier les administrateurs de votre agenda.
+              </DialogDescription>
+            </DialogHeader>
+            <ScrollArea className='max-h-[75dvh] lg:max-h-full'>
+              <AdminList />
+            </ScrollArea>
+          </DialogContent>
+        </Dialog>
       </CardFooter>
     </Card>
   );
