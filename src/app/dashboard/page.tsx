@@ -98,7 +98,7 @@ export default function Page() {
               icon={Share2}
             />
           </div>
-          <div>
+          <div className='hidden sm:block'>
             <StatCardDashboard
               title='Historique'
               value={<HistoryTable />}

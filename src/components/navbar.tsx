@@ -1,6 +1,8 @@
 'use client';
 import {
+  CalendarRangeIcon,
   GalleryVerticalEnd,
+  HomeIcon,
   LifeBuoy,
   LogOutIcon,
   Settings2
@@ -19,18 +21,49 @@ import {
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu';
 import { TypographyMuted, TypographySmall } from '~/components/ui/typography';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle
+} from './ui/navigation-menu';
 
 export function Navbar() {
   return (
     <nav className='p-2 px-4 bg-white border-b flex items-center justify-between shadow-sm'>
-      <Link href='/dashboard'>
-        <Logo
-          className={buttonVariants({
-            variant: 'ghost',
-            className: 'h-10 w-fit'
-          })}
-        />
-      </Link>
+      <div className='flex items-center'>
+        <Link href='/dashboard'>
+          <Logo
+            className={buttonVariants({
+              variant: 'ghost',
+              className: 'h-10 w-fit'
+            })}
+          />
+        </Link>
+        <NavigationMenu className='xl:block hidden'>
+          <NavigationMenuList>
+            <Link
+              href='/dashboard'
+              legacyBehavior
+              passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Dashboard
+              </NavigationMenuLink>
+            </Link>
+            <Link
+              href='/dashboard/agendas'
+              legacyBehavior
+              passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Mes agendas
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
 
       <div className='lg:w-[300px]'>
         <QuickAccessWrapper />
@@ -58,6 +91,19 @@ export function Navbar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Jean Michel Da Silva Da Costa</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link href='/dashboard'>
+                <HomeIcon className='h-4 w-4 mr-2' />
+                Dashboard
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href='/dashboard/agendas'>
+                <CalendarRangeIcon className='h-4 w-4 mr-2' />
+                Mes agendas
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href='/dashboard/history'>
