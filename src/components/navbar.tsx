@@ -1,5 +1,10 @@
 'use client';
-import { LogOutIcon } from 'lucide-react';
+import {
+  GalleryVerticalEnd,
+  LifeBuoy,
+  LogOutIcon,
+  Settings2
+} from 'lucide-react';
 import Link from 'next/link';
 import { QuickAccessWrapper } from '~/app/dashboard/_components/quick-access-wrapper';
 import { Logo } from '~/components/logo/logo';
@@ -54,8 +59,20 @@ export function Navbar() {
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Jean Michel Da Silva Da Costa</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Paramètres</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href='/dashboard/history'>
+                <GalleryVerticalEnd className='h-4 w-4 mr-2' />
+                Historique
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Settings2 className='h-4 w-4 mr-2' />
+              Paramètres
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <LifeBuoy className='h-4 w-4 mr-2' />
+              Support
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <LogOutIcon className='h-4 w-4 mr-2' />
               Se déconnecter

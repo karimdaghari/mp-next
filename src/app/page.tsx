@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from '~/components/logo/logo';
 import { buttonVariants } from '~/components/ui/button';
@@ -42,6 +43,7 @@ export default function LoginForm() {
                 className: 'w-full'
               })}>
               Demander un lien de connexion
+              <ArrowRight className='h-4 w-4 ml-2' />
             </Link>
           </CardFooter>
         </Card>

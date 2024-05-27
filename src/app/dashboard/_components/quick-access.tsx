@@ -1,5 +1,11 @@
 'use client';
-import { ArrowUpRight, CalendarRange, SearchIcon } from 'lucide-react';
+import {
+  ArrowUpRight,
+  CalendarRange,
+  GalleryVerticalEnd,
+  Home,
+  SearchIcon
+} from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Button, buttonVariants } from '~/components/ui/button';
@@ -38,13 +44,13 @@ export function QuickAccess({ data }: Props) {
       <Button
         size='sm'
         variant='outline'
-        className='w-full flex items-center justify-between'
+        className='w-full flex items-center justify-between shadow-sm'
         onClick={() => setOpen(true)}>
         <div className='flex items-center text-gray-500'>
           <SearchIcon className='h-4 w-4 lg:mr-2' />
-          <span className='hidden lg:inline'>Centre de commandes</span>
+          <span className='hidden lg:inline'>Centre de commandes...</span>
         </div>
-        <kbd className='hidden pointer-events-none lg:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100'>
+        <kbd className='hidden pointer-events-none lg:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1 text-muted-foreground.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100'>
           <span className='text-xs'>⌘</span>K
         </kbd>
       </Button>
@@ -71,9 +77,10 @@ export function QuickAccess({ data }: Props) {
                       className={buttonVariants({
                         size: 'sm',
                         variant: 'outline',
-                        className: 'py-1 h-fit w-fit px-2 text-xs'
+                        className:
+                          'py-1 text-muted-foreground h-fit w-fit px-2 text-xs'
                       })}>
-                      <ArrowUpRight className='h-4 w-4 mr-1' />
+                      <ArrowUpRight className='h-4 w-4 mr-1 text-muted-foreground' />
                       Consulter agenda
                     </Link>
                   </div>
@@ -99,16 +106,29 @@ export function QuickAccess({ data }: Props) {
           <CommandGroup heading='Accès rapide'>
             <CommandItem asChild>
               <Link
+                className='flex items-center'
                 href='/dashboard'
                 onClick={() => setOpen(false)}>
-                Dashboard
+                <Home className='h-4 w-4 mr-2 text-muted-foreground' />
+                <span>Dashboard</span>
               </Link>
             </CommandItem>
             <CommandItem asChild>
               <Link
+                className='flex items-center'
                 href='/dashboard/agendas'
                 onClick={() => setOpen(false)}>
-                Mes agendas
+                <CalendarRange className='h-4 w-4 mr-2 text-muted-foreground' />
+                <span>Mes agendas</span>
+              </Link>
+            </CommandItem>
+            <CommandItem asChild>
+              <Link
+                className='flex items-center'
+                href='/dashboard/history'
+                onClick={() => setOpen(false)}>
+                <GalleryVerticalEnd className='h-4 w-4 mr-2 text-muted-foreground' />
+                <span>Historique</span>
               </Link>
             </CommandItem>
           </CommandGroup>

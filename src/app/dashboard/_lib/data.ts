@@ -19,30 +19,35 @@ const admins: Admin[] = [
 
 const history: HistoryItem[] = [
   {
+    type: 'event',
     id: 1,
     adminId: 1,
     action: 'Créer',
     date: '2023-05-22T09:00:00Z'
   },
   {
+    type: 'event',
     id: 2,
     adminId: 1,
     action: 'Modifier logo',
     date: '2023-05-22T09:00:00Z'
   },
   {
+    type: 'event',
     id: 3,
     adminId: 2,
     action: 'Modifier description',
     date: '2023-05-22T09:00:00Z'
   },
   {
+    type: 'event',
     id: 4,
     adminId: 2,
     action: 'Supprimer',
     date: '2023-05-22T09:00:00Z'
   },
   {
+    type: 'event',
     id: 5,
     adminId: 1,
     action: 'Publier',
@@ -256,3 +261,5 @@ export const getEvent = (eventId: number) => {
     agenda
   };
 };
+
+export const getHistory = () => history;

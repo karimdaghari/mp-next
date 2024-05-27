@@ -11,6 +11,7 @@ export interface HistoryItem {
   action: string;
   date: string | Date;
   admin: Admin;
+  type: string;
 }
 interface Shared {
   id: number | string;

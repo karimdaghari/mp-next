@@ -4,6 +4,7 @@ import {
   CalendarPlus,
   CalendarPlus2,
   CalendarRange,
+  GalleryVerticalEnd,
   Heart,
   Send,
   Share2,
@@ -13,6 +14,7 @@ import { StatCardDashboard } from './_components/stat-card-dashboard';
 import Link from 'next/link';
 import { buttonVariants } from '~/components/ui/button';
 import { DashboardHeader } from '~/components/dashboard-header';
+import { HistoryTable } from './history/history-table';
 
 export default function Page() {
   return (
@@ -44,7 +46,7 @@ export default function Page() {
             }
           />
         </div>
-        <div className='grid grid-cols-3 gap-2'>
+        <div className='grid lg:grid-cols-3 grid-cols-2 gap-2'>
           <StatCardDashboard
             title='Events (vif)'
             value={540}
@@ -55,43 +57,64 @@ export default function Page() {
             value={75}
             icon={CalendarRange}
           />
-          <StatCardDashboard
-            title='Utilisateurs uniques'
-            value={954}
-            icon={Users}
-          />
+          <div className='col-span-full lg:col-span-1'>
+            <StatCardDashboard
+              title='Utilisateurs uniques'
+              value={954}
+              icon={Users}
+            />
+          </div>
         </div>
-        <div className='grid grid-cols-2 gap-2'>
-          <StatCardDashboard
-            title="Nb cumulé de suivis d'agendas"
-            value={77}
-            icon={CalendarPlus}
-          />
-          <StatCardDashboard
-            title="Nb cumulé d'abonnements aux agendas"
-            value={221}
-            icon={CalendarPlus}
-          />
-          <StatCardDashboard
-            title="Nb cumulé de partages d'agendas"
-            value={221}
-            icon={Share2}
-          />
-          <StatCardDashboard
-            title="Nb cumulé de likes d'events vifs"
-            value={1050}
-            icon={Heart}
-          />
-          <StatCardDashboard
-            title="Nb cumulé d'envois d'un event dans un calendar"
-            value={432}
-            icon={Send}
-          />
-          <StatCardDashboard
-            title="Nb cumulé de partages d'events"
-            value={95}
-            icon={Share2}
-          />
+        <div className='grid lg:grid-cols-2 gap-2'>
+          <div className='grid lg:grid-cols-2 gap-2'>
+            <StatCardDashboard
+              title="Nb cumulé de suivis d'agendas"
+              value={77}
+              icon={CalendarPlus}
+            />
+            <StatCardDashboard
+              title="Nb cumulé d'abonnements aux agendas"
+              value={221}
+              icon={CalendarPlus}
+            />
+            <StatCardDashboard
+              title="Nb cumulé de partages d'agendas"
+              value={221}
+              icon={Share2}
+            />
+            <StatCardDashboard
+              title="Nb cumulé de likes d'events vifs"
+              value={1050}
+              icon={Heart}
+            />
+            <StatCardDashboard
+              title="Nb cumulé d'envois d'un event dans un calendar"
+              value={432}
+              icon={Send}
+            />
+            <StatCardDashboard
+              title="Nb cumulé de partages d'events"
+              value={95}
+              icon={Share2}
+            />
+          </div>
+          <div>
+            <StatCardDashboard
+              title='Historique'
+              value={<HistoryTable />}
+              icon={GalleryVerticalEnd}
+              footer={
+                <Link
+                  href='/dashboard/history'
+                  className={buttonVariants({
+                    className: 'w-full'
+                  })}>
+                  Voir tout
+                  <ArrowRight className='ml-2 w-4 h-4' />
+                </Link>
+              }
+            />
+          </div>
         </div>
       </div>
     </>
