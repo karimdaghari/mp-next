@@ -16,6 +16,7 @@ import {
 } from '~/components/ui/typography';
 
 interface Props {
+  label: string;
   data?: Array<
     {
       label: string;
@@ -24,7 +25,7 @@ interface Props {
   >;
 }
 
-export function DisplayFilters({ data }: Props) {
+export function DisplayFilters({ data, label }: Props) {
   return (
     <Popover>
       <PopoverTrigger
@@ -33,7 +34,7 @@ export function DisplayFilters({ data }: Props) {
           className: 'w-full'
         })}>
         <Settings2 className='w-4 h-4 mr-2' />
-        Options {"d'affichage"}
+        {label}
       </PopoverTrigger>
       <PopoverContent
         align='start'

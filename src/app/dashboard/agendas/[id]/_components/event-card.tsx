@@ -196,7 +196,7 @@ export function EventCard({
           <div className='h-[22.5px]' />
         )}
 
-        <div className='grid grid-cols-3 gap-1 my-2 justify-items-center'>
+        <div className='grid grid-cols-5 gap-1 my-2 justify-items-center'>
           <div className='text-center'>
             <TypographyH4>{isDraft ? '-' : likes}</TypographyH4>
             <TypographySmall>Likes</TypographySmall>
@@ -208,6 +208,14 @@ export function EventCard({
           <div className='text-center'>
             <TypographyH4>{isDraft ? '-' : subscribers}</TypographyH4>
             <TypographySmall>Participants</TypographySmall>
+          </div>
+          <Separator
+            orientation='vertical'
+            className='h-12'
+          />
+          <div className='text-center'>
+            <TypographyH4>{isDraft ? '-' : subscribers}</TypographyH4>
+            <TypographySmall>Partages</TypographySmall>
           </div>
         </div>
       </CardContent>
@@ -266,10 +274,6 @@ export function EventCard({
                   Historique
                 </DropdownMenuItem>
               </SheetTrigger>
-              <DropdownMenuItem>
-                <CopyIcon className='w-4 h-4 mr-2' />
-                Dupliquer
-              </DropdownMenuItem>
               {!isDraft && !isPastEvent && (
                 <>
                   <DropdownMenuSeparator />

@@ -18,8 +18,13 @@ export function EventsFilters() {
           <div className='xl:w-[350px] w-full'>
             <SearchInput placeholder='Rechercher vos events par titre, tag, lieu, etc...' />
           </div>
+          <DateRangePicker
+            showCompare={false}
+            align='center'
+          />
           <div className='xl:w-fit w-full'>
             <DisplayFilters
+              label="Types d'événements"
               data={[
                 [
                   {
@@ -41,10 +46,6 @@ export function EventsFilters() {
         </div>
       </div>
       <div className='flex items-center sm:flex-row flex-col gap-2 w-full xl:w-min'>
-        <DateRangePicker
-          showCompare={false}
-          align='center'
-        />
         <Select>
           <SelectTrigger
             id='sort'

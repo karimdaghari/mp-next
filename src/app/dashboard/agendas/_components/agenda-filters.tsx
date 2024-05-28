@@ -20,7 +20,7 @@ export function AgendaFilters({ viewSwitcher }: Props) {
           <SearchInput placeholder='Rechercher dans vos agendas...' />
         </div>
         <div className='lg:w-fit w-full'>
-          <DisplayFilters />
+          <DisplayFilters label="Types d'agendas" />
         </div>
       </div>
 

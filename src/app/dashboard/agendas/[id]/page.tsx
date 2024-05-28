@@ -7,7 +7,15 @@ import {
 } from '~/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { buttonVariants } from '~/components/ui/button';
-import { CalendarPlus, PlusIcon, Ticket, UserCheck2 } from 'lucide-react';
+import {
+  CalendarPlus,
+  Heart,
+  PlusIcon,
+  Send,
+  Share2,
+  Ticket,
+  UserCheck2
+} from 'lucide-react';
 import { EventCard } from './_components/event-card';
 import Link from 'next/link';
 import {
@@ -31,6 +39,9 @@ import {
   BreadcrumbSeparator
 } from '~/components/ui/breadcrumb';
 import { AgendaOptions } from './_components/agenda-options';
+import { StatCardDashboard } from '../../_components/stat-card-dashboard';
+import { TypographyMuted } from '~/components/ui/typography';
+import { Fragment } from 'react';
 
 export default function Page({
   params: { id }
@@ -45,7 +56,7 @@ export default function Page({
     redirect('/404');
   }
 
-  const { events, name, description, logo, history } = data;
+  const { events, name, description, logo, history, categories } = data;
 
   return (
     <div className='space-y-4'>
@@ -78,8 +89,21 @@ export default function Page({
               <AvatarFallback>{name[0]}</AvatarFallback>
             </Avatar>
             <div>
-              <div className='flex items-center'>
-                <CardTitle>{name}</CardTitle>
+              <div className='flex items-center gap-4'>
+                <div>
+                  <TypographyMuted>
+                    <Breadcrumb>
+                      <BreadcrumbList>
+                        {categories.map((c) => (
+                          <BreadcrumbItem key={c.id}>
+                            <BreadcrumbLink>{c.name}</BreadcrumbLink>
+                          </BreadcrumbItem>
+                        ))}
+                      </BreadcrumbList>
+                    </Breadcrumb>
+                  </TypographyMuted>
+                  <CardTitle>{name}</CardTitle>
+                </div>
                 <AgendaOptions
                   name={name}
                   history={history}
@@ -90,21 +114,36 @@ export default function Page({
               </CardDescription>
             </div>
           </div>
-          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-2'>
+          <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2'>
             <StatCard
               title='Événements'
               value={events.length}
               icon={Ticket}
             />
             <StatCard
-              title='Followers'
-              value={+(events.length * 10.5).toFixed(0)}
-              icon={UserCheck2}
+              title='Suivis'
+              value={77}
+              icon={CalendarPlus}
             />
             <StatCard
               title='Abonnements'
-              value={events.length * 20}
+              value={221}
               icon={CalendarPlus}
+            />
+            <StatCard
+              title='Partages'
+              value={221}
+              icon={Share2}
+            />
+            <StatCard
+              title='Likes'
+              value={1050}
+              icon={Heart}
+            />
+            <StatCard
+              title="Envois d'events"
+              value={432}
+              icon={Send}
             />
           </div>
         </CardHeader>
