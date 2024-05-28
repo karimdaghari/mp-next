@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         title='Historique'
         description="Accédez à l'historique des différentes modifications apportées à votre compte"
       />
-      {children}
+      <div className='bg-white p-4 rounded-lg shadow'>{children}</div>
     </>
   );
 }
