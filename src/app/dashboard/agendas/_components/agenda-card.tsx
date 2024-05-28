@@ -303,7 +303,7 @@ export function AgendaCard({
             <DialogHeader>
               <DialogTitle>Administrateurs</DialogTitle>
               <DialogDescription>
-                Vous pouvez modifier les administrateurs de votre agenda.
+                La liste des administrateurs de votre agenda
               </DialogDescription>
             </DialogHeader>
             <ScrollArea className='max-h-[75dvh] lg:max-h-full'>
