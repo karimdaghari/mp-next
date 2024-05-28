@@ -30,6 +30,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
 } from './ui/navigation-menu';
+import { Fragment } from 'react';
 
 export function Navbar() {
   return (
@@ -92,19 +93,23 @@ export function Navbar() {
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Jean Michel Da Silva Da Costa</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem
+              asChild
+              className='xl:hidden'>
               <Link href='/dashboard'>
                 <HomeIcon className='h-4 w-4 mr-2' />
                 Dashboard
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem
+              asChild
+              className='xl:hidden'>
               <Link href='/dashboard/agendas'>
                 <CalendarRangeIcon className='h-4 w-4 mr-2' />
                 Mes agendas
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className='xl:hidden' />
             <DropdownMenuItem asChild>
               <Link href='/dashboard/history'>
                 <GalleryVerticalEnd className='h-4 w-4 mr-2' />
