@@ -1,5 +1,5 @@
-import { HistoryTable } from './history-table';
+import { HistoryTable } from "./history-table";
 
 export default function Page() {
-  return <HistoryTable />;
+	return <HistoryTable />;
 }
