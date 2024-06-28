@@ -69,47 +69,6 @@ const admins: Admin[] = [
   },
 ]
 
-const history: IHistoryItem[] = [
-  {
-    type: 'event',
-    id: 1,
-    adminId: 1,
-    action: 'Créer',
-    date: '2023-05-22T09:00:00Z',
-  },
-  {
-    type: 'event',
-    id: 2,
-    adminId: 1,
-    action: 'Modifier logo',
-    date: '2023-05-22T09:00:00Z',
-  },
-  {
-    type: 'event',
-    id: 3,
-    adminId: 2,
-    action: 'Modifier description',
-    date: '2023-05-22T09:00:00Z',
-  },
-  {
-    type: 'event',
-    id: 4,
-    adminId: 2,
-    action: 'Supprimer',
-    date: '2023-05-22T09:00:00Z',
-  },
-  {
-    type: 'event',
-    id: 5,
-    adminId: 1,
-    action: 'Publier',
-    date: '2023-05-22T09:00:00Z',
-  },
-].map((history) => ({
-  ...history,
-  admin: admins.find((admin) => admin.id === history.adminId)!,
-}))
-
 const events: EventItem[] = [
   {
     agendaId: 'a1',
@@ -127,7 +86,6 @@ const events: EventItem[] = [
     categories: ['Colloque'],
     likes: 100,
     subscribers: 250,
-    history,
   },
   {
     agendaId: 'a1',
@@ -145,7 +103,6 @@ const events: EventItem[] = [
     categories: ['Networking'],
     likes: 90,
     subscribers: 220,
-    history,
   },
   {
     agendaId: 'a2',
@@ -163,7 +120,6 @@ const events: EventItem[] = [
     categories: [],
     likes: 120,
     subscribers: 320,
-    history,
   },
   {
     agendaId: 'a2',
@@ -181,7 +137,6 @@ const events: EventItem[] = [
     categories: ['Conférence'],
     likes: 120,
     subscribers: 320,
-    history,
   },
   {
     agendaId: 'a2',
@@ -199,7 +154,6 @@ const events: EventItem[] = [
     categories: ['Atelier'],
     likes: 120,
     subscribers: 320,
-    history,
   },
   {
     agendaId: 'a2',
@@ -216,7 +170,6 @@ const events: EventItem[] = [
     categories: ['Business'],
     likes: 120,
     subscribers: 320,
-    history,
   },
   {
     agendaId: 'a2',
@@ -232,7 +185,6 @@ const events: EventItem[] = [
     categories: [],
     likes: null,
     subscribers: null,
-    history,
   },
 ]
 
@@ -259,7 +211,6 @@ const agendas: AgendaItem[] = [
     eventsNumber: 10,
     attendanceRate: 75.5,
     events: getAgendaEvents('a1'),
-    history,
     admins,
     categories: [1].map(getCategoryById) as CategoryItem[],
   },
@@ -274,7 +225,6 @@ const agendas: AgendaItem[] = [
     eventsNumber: 5,
     attendanceRate: 60.3,
     events: getAgendaEvents('a2'),
-    history,
     admins,
     categories: [2].map(getCategoryById) as CategoryItem[],
   },
@@ -288,7 +238,6 @@ const agendas: AgendaItem[] = [
     attendanceRate: null,
     isDraft: true,
     events: getAgendaEvents('a3'),
-    history,
     admins,
     categories: [2].map(getCategoryById) as CategoryItem[],
   },

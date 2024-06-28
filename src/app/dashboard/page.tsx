@@ -15,7 +15,6 @@ import { DashboardHeader } from '~/components/dashboard-header'
 import { buttonVariants } from '~/components/ui/button'
 import { TypographyH4 } from '~/components/ui/typography'
 import { StatCardDashboard } from './_components/stat-card-dashboard'
-import { HistoryTable } from './history/history-table'
 
 export default function Page() {
   return (
@@ -104,24 +103,6 @@ export default function Page() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="hidden sm:block">
-          <StatCardDashboard
-            title="Historique"
-            value={<HistoryTable />}
-            icon={GalleryVerticalEnd}
-            footer={
-              <Link
-                href="/dashboard/history"
-                className={buttonVariants({
-                  className: 'w-full',
-                })}
-              >
-                Voir tout
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            }
-          />
         </div>
       </div>
     </>

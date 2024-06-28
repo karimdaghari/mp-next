@@ -58,7 +58,6 @@ import {
   TypographySmall,
 } from '~/components/ui/typography'
 import { cn } from '~/lib/utils'
-import { HistoryList } from '../../_components/history-list'
 
 export function EventCard({
   id,
@@ -74,7 +73,6 @@ export function EventCard({
   isDraft = false,
   agendaId,
   categories,
-  history,
 }: Props) {
   let formattedDate = null
 
@@ -240,67 +238,39 @@ export function EventCard({
             Éditer <EditIcon className="w-4 h-4 ml-2" />
           </Link>
         )}
-        <Sheet>
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              className={buttonVariants({
-                variant: 'ghost',
-                size: 'sm',
-              })}
-            >
-              <MoreVerticalIcon className="w-4 h-4" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {isDraft ? (
-                <DropdownMenuItem>
-                  <Rss className="w-4 h-4 mr-2" />
-                  Publier
-                </DropdownMenuItem>
-              ) : null}
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            className={buttonVariants({
+              variant: 'ghost',
+              size: 'sm',
+            })}
+          >
+            <MoreVerticalIcon className="w-4 h-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {isDraft ? (
               <DropdownMenuItem>
-                <CopyIcon className="w-4 h-4 mr-2" />
-                Dupliquer
+                <Rss className="w-4 h-4 mr-2" />
+                Publier
               </DropdownMenuItem>
-              <SheetTrigger asChild>
-                <DropdownMenuItem>
-                  <HistoryIcon className="w-4 h-4 mr-2" />
-                  Historique
+            ) : null}
+            <DropdownMenuItem>
+              <CopyIcon className="w-4 h-4 mr-2" />
+              Dupliquer
+            </DropdownMenuItem>
+            {!isDraft && !isPastEvent && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-destructive hover:text-destructive">
+                  <Lock className="w-4 h-4 mr-2" />
+                  Désactiver
                 </DropdownMenuItem>
-              </SheetTrigger>
-              {!isDraft && !isPastEvent && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive hover:text-destructive">
-                    <Lock className="w-4 h-4 mr-2" />
-                    Désactiver
-                  </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <SheetContent>
-            <SheetHeader className="mb-8">
-              <div>
-                <SheetTitle className="flex items-center">
-                  <HistoryIcon className="w-4 h-4 mr-1" />
-                  Historique de {"l'événement"}
-                </SheetTitle>
-                <SheetDescription>{name}</SheetDescription>
-              </div>
-            </SheetHeader>
-            <ScrollArea className="h-[calc(100dvh-8rem)]">
-              {history && history?.length > 0 ? (
-                <HistoryList data={history} />
-              ) : (
-                <TypographyMuted>
-                  Aucune modification {"n'a"} été effectuée sur cet événement.
-                </TypographyMuted>
-              )}
-            </ScrollArea>
-          </SheetContent>
-        </Sheet>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardFooter>
     </Card>
   )

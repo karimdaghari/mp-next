@@ -49,7 +49,6 @@ import {
 import { cn } from '~/lib/utils'
 import { AdminList } from '../../_components/admin-list'
 import { AgendaForm } from '../../_components/agenda-form'
-import { HistoryList } from '../../_components/history-list'
 
 interface Props {
   data: CategoryTree[]
@@ -103,8 +102,7 @@ function TreeItem({ data, depth }: TreeItemProps) {
         }}
       >
         {data.agendas.map((agenda) => {
-          const { eventsNumber, attendanceRate, isDraft, id, name, history } =
-            agenda
+          const { eventsNumber, attendanceRate, isDraft, id, name } = agenda
           return (
             <div key={agenda.id}>
               <Card className="bg-white p-0 rounded-lg border w-full">
@@ -203,73 +201,44 @@ function TreeItem({ data, depth }: TreeItemProps) {
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Link>
                   )}
-                  <Sheet>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger
-                        className={buttonVariants({
-                          variant: 'ghost',
-                          size: 'sm',
-                        })}
-                      >
-                        <MoreVerticalIcon className="w-4 h-4" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {isDraft ? (
-                          <DropdownMenuItem>
-                            <Rss className="w-4 h-4 mr-2" />
-                            Publier
-                          </DropdownMenuItem>
-                        ) : null}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger
+                      className={buttonVariants({
+                        variant: 'ghost',
+                        size: 'sm',
+                      })}
+                    >
+                      <MoreVerticalIcon className="w-4 h-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {isDraft ? (
                         <DropdownMenuItem>
-                          <CopyIcon className="w-4 h-4 mr-2" />
-                          Dupliquer
+                          <Rss className="w-4 h-4 mr-2" />
+                          Publier
                         </DropdownMenuItem>
-                        <SheetTrigger asChild>
-                          <DropdownMenuItem>
-                            <History className="w-4 h-4 mr-2" />
-                            Historique
-                          </DropdownMenuItem>
-                        </SheetTrigger>
-                        <DropdownMenuItem onSelect={() => setShowAdmins(true)}>
-                          <UsersIcon className="w-4 h-4 mr-2" />
-                          Administrateurs
-                        </DropdownMenuItem>
+                      ) : null}
+                      <DropdownMenuItem>
+                        <CopyIcon className="w-4 h-4 mr-2" />
+                        Dupliquer
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onSelect={() => setShowAdmins(true)}>
+                        <UsersIcon className="w-4 h-4 mr-2" />
+                        Administrateurs
+                      </DropdownMenuItem>
 
-                        {!isDraft && (
-                          <>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-destructive hover:text-destructive">
-                              <Lock className="w-4 h-4 mr-2" />
-                              Désactiver
-                            </DropdownMenuItem>
-                          </>
-                        )}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    <SheetContent>
-                      <SheetHeader className="mb-8">
-                        <div>
-                          <SheetTitle className="flex items-center">
-                            <HistoryIcon className="w-4 h-4 mr-1" />
-                            Historique de {"l'agenda"}
-                          </SheetTitle>
-                          <SheetDescription>{name}</SheetDescription>
-                        </div>
-                      </SheetHeader>
-                      <ScrollArea className="h-[calc(100dvh-8rem)]">
-                        {history && history?.length > 0 ? (
-                          <HistoryList data={history} />
-                        ) : (
-                          <TypographyMuted>
-                            Aucune modification {"n'a"} été effectuée sur cet
-                            agenda.
-                          </TypographyMuted>
-                        )}
-                      </ScrollArea>
-                    </SheetContent>
-                  </Sheet>
+                      {!isDraft && (
+                        <>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="text-destructive hover:text-destructive">
+                            <Lock className="w-4 h-4 mr-2" />
+                            Désactiver
+                          </DropdownMenuItem>
+                        </>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   <Dialog open={showAdmins} onOpenChange={setShowAdmins}>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>

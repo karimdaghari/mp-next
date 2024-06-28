@@ -64,7 +64,6 @@ import { cn } from '~/lib/utils'
 import type { AgendaItem as Props } from '../../_lib/types'
 import { AdminList } from './admin-list'
 import { AgendaForm } from './agenda-form'
-import { HistoryList } from './history-list'
 
 export function AgendaCard({
   id,
@@ -75,7 +74,6 @@ export function AgendaCard({
   eventsNumber,
   attendanceRate,
   isDraft = false,
-  history,
 }: Props) {
   const [open, setOpen] = useState(false)
   return (
@@ -222,76 +220,48 @@ export function AgendaCard({
             <ArrowRight className="ml-2 w-4 h-4" />
           </Link>
         )}
-        <Sheet>
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              className={buttonVariants({
-                variant: 'ghost',
-                size: 'sm',
-              })}
-            >
-              <MoreVerticalIcon className="w-4 h-4" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {isDraft ? (
-                <DropdownMenuItem>
-                  <Rss className="w-4 h-4 mr-2" />
-                  Publier
-                </DropdownMenuItem>
-              ) : null}
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            className={buttonVariants({
+              variant: 'ghost',
+              size: 'sm',
+            })}
+          >
+            <MoreVerticalIcon className="w-4 h-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {isDraft ? (
               <DropdownMenuItem>
-                <CopyIcon className="w-4 h-4 mr-2" />
-                Dupliquer
+                <Rss className="w-4 h-4 mr-2" />
+                Publier
               </DropdownMenuItem>
-              <SheetTrigger asChild>
-                <DropdownMenuItem>
-                  <History className="w-4 h-4 mr-2" />
-                  Historique
+            ) : null}
+            <DropdownMenuItem>
+              <CopyIcon className="w-4 h-4 mr-2" />
+              Dupliquer
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={(e) => {
+                setOpen(true)
+                e.stopPropagation()
+              }}
+            >
+              <UsersIcon className="w-4 h-4 mr-2" />
+              Administrateurs
+            </DropdownMenuItem>
+            {!isDraft && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-destructive hover:text-destructive">
+                  <Lock className="w-4 h-4 mr-2" />
+                  Désactiver
                 </DropdownMenuItem>
-              </SheetTrigger>
-              <DropdownMenuItem
-                onSelect={(e) => {
-                  setOpen(true)
-                  e.stopPropagation()
-                }}
-              >
-                <UsersIcon className="w-4 h-4 mr-2" />
-                Administrateurs
-              </DropdownMenuItem>
-              {!isDraft && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive hover:text-destructive">
-                    <Lock className="w-4 h-4 mr-2" />
-                    Désactiver
-                  </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <SheetContent>
-            <SheetHeader className="mb-8">
-              <div>
-                <SheetTitle className="flex items-center">
-                  <HistoryIcon className="w-4 h-4 mr-1" />
-                  Historique de {"l'agenda"}
-                </SheetTitle>
-                <SheetDescription>{name}</SheetDescription>
-              </div>
-            </SheetHeader>
-            <ScrollArea className="h-[calc(100dvh-8rem)]">
-              {history && history?.length > 0 ? (
-                <HistoryList data={history} />
-              ) : (
-                <TypographyMuted>
-                  Aucune modification {"n'a"} été effectuée sur cet agenda.
-                </TypographyMuted>
-              )}
-            </ScrollArea>
-          </SheetContent>
-        </Sheet>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>

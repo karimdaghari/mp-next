@@ -5,11 +5,9 @@ import {
   Send,
   Share2,
   Ticket,
-  UserCheck2,
 } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Fragment } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import {
   Breadcrumb,
@@ -37,7 +35,6 @@ import {
 } from '~/components/ui/pagination'
 import { TypographyMuted } from '~/components/ui/typography'
 import { StatCard } from '../../_components/stat-card'
-import { StatCardDashboard } from '../../_components/stat-card-dashboard'
 import { getAgenda } from '../../_lib/data'
 import { AgendaOptions } from './_components/agenda-options'
 import { EventCard } from './_components/event-card'
@@ -56,7 +53,7 @@ export default function Page({
     redirect('/404')
   }
 
-  const { events, name, description, logo, history, categories } = data
+  const { events, name, description, logo, categories } = data
 
   return (
     <div className="space-y-4">
@@ -99,7 +96,7 @@ export default function Page({
                   </TypographyMuted>
                   <CardTitle>{name}</CardTitle>
                 </div>
-                <AgendaOptions name={name} history={history} />
+                <AgendaOptions name={name} />
               </div>
               <CardDescription className="line-clamp-2">
                 {description}

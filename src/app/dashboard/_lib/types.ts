@@ -19,7 +19,6 @@ interface Shared {
   description?: string | null
   cover?: string | null
   isDraft?: boolean
-  history?: IHistoryItem[]
 }
 
 export interface EventItem extends Shared {

@@ -36,15 +36,6 @@ export default function DashboardAgendas() {
         <DashboardHeader
           title="Mes agendas"
           description="Gérez vos agendas et vos événements"
-          rightSection={
-            <DialogTrigger
-              className={buttonVariants({
-                className: 'w-full lg:w-fit',
-              })}
-            >
-              Créer un agenda
-            </DialogTrigger>
-          }
         />
         <DialogContent>
           <DialogHeader>
@@ -101,7 +92,6 @@ export default function DashboardAgendas() {
           <Tree data={tree} />
         </TabsContent>
       </Tabs>
-
       <Pagination>
         <PaginationContent>
           <PaginationItem>
