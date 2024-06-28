@@ -57,7 +57,7 @@ export function EventPreview(props: Props) {
     <div className="flex justify-center items-center">
       <div className="device device-iphone-14">
         <div className="device-frame">
-          <div className="relative bg-background h-full rounded-t-[60px] rounded-b-[60px] pt-12">
+          <div className="relative bg-background h-full rounded-t-[60px] rounded-b-[60px] pt-12 pb-2 overflow-y-auto max-h-[887px] scrollbar-none">
             <div className="h-52 relative rounded-t-[6px]">
               {props.coverImage ? (
                 <img
@@ -90,7 +90,7 @@ export function EventPreview(props: Props) {
                       alt={`Logo de l'agenda ${props.agendaName}`}
                     />
                   </Avatar>
-                  <p className="font-medium line-clamp-1">{props.agendaName}</p>
+                  <p className="font-medium">{props.agendaName}</p>
                 </div>
                 <Button
                   size="sm"
@@ -105,9 +105,7 @@ export function EventPreview(props: Props) {
               </Badge>
 
               <div className="space-y-3">
-                <TypographyLarge className="line-clamp-1">
-                  {props.name}
-                </TypographyLarge>
+                <TypographyLarge>{props.name}</TypographyLarge>
                 <div className="flex items-center">
                   <CalendarDaysIcon className="size-5 mr-1" />
                   <TypographySmall>{date}</TypographySmall>
@@ -132,7 +130,7 @@ export function EventPreview(props: Props) {
 
               <div className="space-y-1">
                 <TypographyLarge>À propos</TypographyLarge>
-                <p className="line-clamp-2">
+                <p>
                   {props.description ??
                     'Pas de description pour cet événement.'}
                 </p>
