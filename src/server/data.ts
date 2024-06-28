@@ -4,7 +4,7 @@ import type {
   CategoryItem,
   CategoryTree,
   EventItem,
-} from './types'
+} from '../app/dashboard/_lib/types'
 
 let categories: CategoryItem[] = [
   {
@@ -274,13 +274,17 @@ const tree = categories.reduce((acc, category) => {
 
 export const getAgenda = (id: string) => {
   const agenda = agendas.find((item) => item.id === id)
-  if (!agenda) {
-    return null
-  }
+  if (!agenda) return null
   return agenda
 }
 
 export const getAllAgendas = () => agendas
+
+export const getAllCategories = () => categories
+
+export const getAllCategoriesTree = () => tree
+
+export const getAllAdmins = () => admins
 
 export const getEvent = (eventId: number) => {
   const event = events.find((item) => item.id === eventId)
@@ -296,11 +300,3 @@ export const getEvent = (eventId: number) => {
     agenda,
   }
 }
-
-export const getHistory = () => history
-
-export const getAllCategories = () => categories
-
-export const getAllCategoriesTree = () => tree
-
-export const getAllAdmins = () => admins

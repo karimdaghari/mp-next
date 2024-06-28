@@ -1,4 +1,6 @@
 import { lightFormat } from 'date-fns'
+import { Suspense } from 'react'
+import { Skeleton } from '~/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -7,10 +9,18 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table'
-import { getAllAdmins } from '../../_lib/data'
+import { api } from '~/trpc/react'
 
 export function AdminList() {
-  const data = getAllAdmins()
+  return (
+    <Suspense fallback={<Skeleton className="h-52 w-full" />}>
+      <List />
+    </Suspense>
+  )
+}
+
+function List() {
+  const [data] = api.agenda.getAllAdmins.useSuspenseQuery()
   return (
     <Table>
       <TableHeader>

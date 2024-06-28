@@ -1,4 +1,3 @@
-import { ListTreeIcon, NetworkIcon } from 'lucide-react'
 import { DashboardHeader } from '~/components/dashboard-header'
 import {
   Dialog,
@@ -16,17 +15,19 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '~/components/ui/pagination'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
+import { Tabs, TabsContent } from '~/components/ui/tabs'
 import { TypographyH4, TypographyMuted } from '~/components/ui/typography'
-import { getAllCategories, getAllCategoriesTree } from '../_lib/data'
 import { Tree } from './[id]/_components/tree'
 import { AgendaCard } from './_components/agenda-card'
 import { AgendaFilters } from './_components/agenda-filters'
 import { AgendaForm } from './_components/agenda-form'
+import { api } from '~/trpc/server'
 
-export default function DashboardAgendas() {
-  const categories = getAllCategories()
-  const tree = getAllCategoriesTree()
+export default async function Page() {
+  const [categories, tree] = await Promise.all([
+    api.agenda.getAllCategories(),
+    api.agenda.getAllCategoriesTree(),
+  ])
 
   return (
     <>
@@ -48,16 +49,17 @@ export default function DashboardAgendas() {
       <Tabs defaultValue="list">
         <AgendaFilters
           viewSwitcher={
-            <TabsList className="bg-accent">
-              <TabsTrigger value="list">
-                <ListTreeIcon className="w-4 h-4 mr-2" />
-                Liste
-              </TabsTrigger>
-              <TabsTrigger value="tree">
-                <NetworkIcon className="w-4 h-4 mr-2" />
-                Arborescence
-              </TabsTrigger>
-            </TabsList>
+            null
+            // <TabsList className="bg-accent">
+            //   <TabsTrigger value="list">
+            //     <ListTreeIcon className="w-4 h-4 mr-2" />
+            //     Liste
+            //   </TabsTrigger>
+            //   <TabsTrigger value="tree">
+            //     <NetworkIcon className="w-4 h-4 mr-2" />
+            //     Arborescence
+            //   </TabsTrigger>
+            // </TabsList>
           }
         />
         <TabsContent value="list" className="grid gap-8 my-4">

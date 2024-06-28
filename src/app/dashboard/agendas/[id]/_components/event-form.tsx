@@ -3,7 +3,6 @@ import { isPast } from 'date-fns'
 import { CopyIcon, Lock, Rss } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import type { EventItem } from '~/app/dashboard/_lib/types'
-import { MultiSelect } from '~/components/multi-select'
 import { Badge } from '~/components/ui/badge'
 import { Button, buttonVariants } from '~/components/ui/button'
 import { DatePicker } from '~/components/ui/date-picker'
@@ -23,6 +22,7 @@ import { Switch } from '~/components/ui/switch'
 import { Textarea } from '~/components/ui/textarea'
 import { TypographyLarge, TypographyMuted } from '~/components/ui/typography'
 import { EventPreview } from './event-preview'
+import { Combobox } from '~/components/ui/combobox'
 
 interface Props {
   title: string
@@ -147,7 +147,8 @@ export function EventForm({ title, description }: Props) {
           </div>
           <div className="flex flex-col space-y-2">
             <Label>Catégories</Label>
-            <MultiSelect
+            <Combobox
+              multiple
               placeholder="Sélectionnez une catégorie..."
               data={[
                 { value: '1', label: 'Cat. 1' },

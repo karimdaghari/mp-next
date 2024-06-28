@@ -7,7 +7,6 @@ import {
   Ticket,
 } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import {
   Breadcrumb,
@@ -35,25 +34,21 @@ import {
 } from '~/components/ui/pagination'
 import { TypographyMuted } from '~/components/ui/typography'
 import { StatCard } from '../../_components/stat-card'
-import { getAgenda } from '../../_lib/data'
 import { AgendaOptions } from './_components/agenda-options'
 import { EventCard } from './_components/event-card'
 import { EventsFilters } from './_components/events-filters'
+import { api } from '~/trpc/server'
 
-export default function Page({
+export default async function Page({
   params: { id },
 }: {
   params: {
     id: string
   }
 }) {
-  const data = getAgenda(id)
-
-  if (!data) {
-    redirect('/404')
-  }
-
-  const { events, name, description, logo, categories } = data
+  const { events, name, description, logo, categories } = await api.agenda.get({
+    id,
+  })
 
   return (
     <div className="space-y-4">
