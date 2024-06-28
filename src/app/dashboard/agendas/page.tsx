@@ -1,13 +1,11 @@
 import { ListTreeIcon, NetworkIcon } from 'lucide-react'
 import { DashboardHeader } from '~/components/dashboard-header'
-import { buttonVariants } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '~/components/ui/dialog'
 import {
   Pagination,

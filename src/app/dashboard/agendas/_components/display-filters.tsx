@@ -9,11 +9,7 @@ import {
 } from '~/components/ui/popover'
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
 import { Separator } from '~/components/ui/separator'
-import {
-  TypographyLarge,
-  TypographyMuted,
-  TypographySmall,
-} from '~/components/ui/typography'
+import { TypographyMuted, TypographySmall } from '~/components/ui/typography'
 
 interface Props {
   label: string

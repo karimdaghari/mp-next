@@ -4,7 +4,6 @@ import {
   CalendarPlus,
   CalendarPlus2,
   CalendarRange,
-  GalleryVerticalEnd,
   Heart,
   Send,
   Share2,

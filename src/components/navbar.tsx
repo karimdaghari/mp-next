@@ -12,14 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from '~/components/ui/navigation-menu'
 import { TypographyMuted, TypographySmall } from '~/components/ui/typography'
-import { cn } from '~/lib/utils'
 
 export function Navbar() {
   const menu = [

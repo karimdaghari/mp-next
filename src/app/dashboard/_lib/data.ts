@@ -4,7 +4,6 @@ import type {
   CategoryItem,
   CategoryTree,
   EventItem,
-  IHistoryItem,
 } from './types'
 
 let categories: CategoryItem[] = [

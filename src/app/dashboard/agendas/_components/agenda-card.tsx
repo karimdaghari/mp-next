@@ -3,8 +3,6 @@ import {
   ArrowRight,
   CopyIcon,
   EditIcon,
-  History,
-  HistoryIcon,
   Lock,
   MoreVerticalIcon,
   Rss,
@@ -41,14 +39,6 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { ScrollArea } from '~/components/ui/scroll-area'
 import { Separator } from '~/components/ui/separator'
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '~/components/ui/sheet'
 import {
   Tooltip,
   TooltipContent,

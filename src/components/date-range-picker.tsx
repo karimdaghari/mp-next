@@ -1,14 +1,7 @@
-/* eslint-disable max-lines */
 'use client'
 
-import {
-  CalendarRange,
-  CheckIcon,
-  ChevronDown,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from 'lucide-react'
-import React, { type FC, useState, useEffect, useRef } from 'react'
+import { CalendarRange, CheckIcon, ChevronDown } from 'lucide-react'
+import { type FC, useEffect, useRef, useState } from 'react'
 import { cn } from '~/lib/utils'
 import { DateInput } from './date-input'
 import { Button } from './ui/button'
@@ -54,15 +47,14 @@ const formatDate = (date: Date, locale = 'en-us'): string => {
 const getDateAdjustedForTimezone = (dateInput: Date | string): Date => {
   if (typeof dateInput === 'string') {
     // Split the date string to get year, month, and day parts
-    const parts = dateInput.split('-').map((part) => parseInt(part, 10))
+    const parts = dateInput.split('-').map((part) => Number.parseInt(part, 10))
     // Create a new Date object using the local timezone
     // Note: Month is 0-indexed, so subtract 1 from the month part
     const date = new Date(parts[0], parts[1] - 1, parts[2])
     return date
-  } else {
-    // If dateInput is already a Date object, return it directly
-    return dateInput
   }
+  // If dateInput is already a Date object, return it directly
+  return dateInput
 }
 
 interface DateRange {
@@ -249,6 +241,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     )
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: this is intentional
   useEffect(() => {
     checkPreset()
   }, [range])
@@ -287,6 +280,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     )
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: this is intentional
   useEffect(() => {
     if (isOpen) {
       openedRangeRef.current = range
@@ -311,7 +305,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
           <div className="text-right">
             <div className="py-1">
               <div>{`${formatDate(range.from, locale)}${
-                range.to != null ? ' - ' + formatDate(range.to, locale) : ''
+                range.to != null ? ` - ${formatDate(range.to, locale)}` : ''
               }`}</div>
             </div>
             {rangeCompare != null && (

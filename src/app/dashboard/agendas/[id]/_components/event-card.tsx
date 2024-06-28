@@ -1,5 +1,4 @@
 'use client'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { format, isPast, isSameDay } from 'date-fns'
 import { fr } from 'date-fns/locale/fr'
 import {
@@ -8,7 +7,6 @@ import {
   CopyIcon,
   EditIcon,
   ExternalLink,
-  HistoryIcon,
   Info,
   Lock,
   MapPin,
@@ -37,23 +35,13 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Separator } from '~/components/ui/separator'
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '~/components/ui/sheet'
-import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '~/components/ui/tooltip'
 import {
-  TypographyH3,
   TypographyH4,
-  TypographyLarge,
   TypographyMuted,
   TypographySmall,
 } from '~/components/ui/typography'
