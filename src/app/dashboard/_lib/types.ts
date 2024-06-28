@@ -1,55 +1,55 @@
 export interface Admin {
-	id: number;
-	name: string;
-	email: string;
-	avatar?: string | null;
+  id: number
+  name: string
+  email: string
+  avatar?: string | null
 }
 
 export interface IHistoryItem {
-	id: number;
-	adminId: number;
-	action: string;
-	date: string | Date;
-	admin: Admin;
-	type: string;
+  id: number
+  adminId: number
+  action: string
+  date: string | Date
+  admin: Admin
+  type: string
 }
 interface Shared {
-	id: number | string;
-	name: string;
-	description?: string | null;
-	cover?: string | null;
-	isDraft?: boolean;
-	history?: IHistoryItem[];
+  id: number | string
+  name: string
+  description?: string | null
+  cover?: string | null
+  isDraft?: boolean
+  history?: IHistoryItem[]
 }
 
 export interface EventItem extends Shared {
-	agendaId: number | string;
-	location?: string | null;
-	url?: string | null;
-	startDate?: string | Date | null;
-	endDate?: string | Date | null;
-	categories: string[];
-	likes?: number | null;
-	subscribers?: number | null;
+  agendaId: number | string
+  location?: string | null
+  url?: string | null
+  startDate?: string | Date | null
+  endDate?: string | Date | null
+  categories: string[]
+  likes?: number | null
+  subscribers?: number | null
 }
 
 export interface CategoryItem {
-	id: number;
-	name: string;
-	agendas: AgendaItem[];
-	rootId?: number | null;
-	root?: CategoryItem | null;
+  id: number
+  name: string
+  agendas: AgendaItem[]
+  rootId?: number | null
+  root?: CategoryItem | null
 }
 
 export interface CategoryTree extends CategoryItem {
-	children?: CategoryItem[];
+  children?: CategoryItem[]
 }
 
 export interface AgendaItem extends Shared {
-	logo?: string | null;
-	eventsNumber: number | null;
-	attendanceRate: number | null;
-	events: EventItem[];
-	admins?: Admin[];
-	categories: CategoryItem[];
+  logo?: string | null
+  eventsNumber: number | null
+  attendanceRate: number | null
+  events: EventItem[]
+  admins?: Admin[]
+  categories: CategoryItem[]
 }
