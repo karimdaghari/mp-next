@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { getEvent } from '~/app/dashboard/_lib/data'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,16 +8,17 @@ import {
   BreadcrumbSeparator,
 } from '~/components/ui/breadcrumb'
 import { EventForm } from '../../../_components/event-form'
+import { api } from '~/trpc/server'
 
-export default function Page({
-  params: { id, eid },
+export default async function Page({
+  params: { id: agendaId, eid: eventId },
 }: {
   params: {
     id: string
     eid: string
   }
 }) {
-  const event = getEvent(Number(eid))
+  const event = await api.events.get({ id: +eventId })
 
   if (!event) {
     redirect('/404')
@@ -37,7 +37,7 @@ export default function Page({
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/dashboard/agendas/${id}`}>{agenda.name}</Link>
+              <Link href={`/dashboard/agendas/${agendaId}`}>{agenda.name}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />

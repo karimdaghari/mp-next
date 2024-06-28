@@ -1,6 +1,4 @@
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
-import { getAgenda } from '~/app/dashboard/_lib/data'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,21 +7,16 @@ import {
   BreadcrumbSeparator,
 } from '~/components/ui/breadcrumb'
 import { EventForm } from '../../_components/event-form'
+import { api } from '~/trpc/server'
 
-export default function Page({
+export default async function Page({
   searchParams: { from: id },
 }: {
   searchParams: {
     from: string
   }
 }) {
-  const data = getAgenda(id)
-
-  if (!data) {
-    redirect('/404')
-  }
-
-  const { name } = data
+  const { name } = await api.agenda.get({ id })
 
   return (
     <>

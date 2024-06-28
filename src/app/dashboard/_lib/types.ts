@@ -1,54 +1,68 @@
-export interface Admin {
-  id: number
-  name: string
-  email: string
-  avatar?: string | null
-}
+import type { Merge } from 'type-fest'
+import { z } from 'zod'
 
-export interface IHistoryItem {
-  id: number
-  adminId: number
-  action: string
-  date: string | Date
-  admin: Admin
-  type: string
-}
-interface Shared {
-  id: number | string
-  name: string
-  description?: string | null
-  cover?: string | null
-  isDraft?: boolean
-}
+export const AdminSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  email: z.string().email(),
+  avatar: z.string().nullish(),
+})
 
-export interface EventItem extends Shared {
-  agendaId: number | string
-  location?: string | null
-  url?: string | null
-  startDate?: string | Date | null
-  endDate?: string | Date | null
-  categories: string[]
-  likes?: number | null
-  subscribers?: number | null
-}
+export type Admin = z.infer<typeof AdminSchema>
 
-export interface CategoryItem {
-  id: number
-  name: string
-  agendas: AgendaItem[]
-  rootId?: number | null
-  root?: CategoryItem | null
-}
+const SharedSchema = z.object({
+  id: z.union([z.number(), z.string()]),
+  name: z.string(),
+  description: z.string().nullish(),
+  cover: z.string().nullish(),
+  isDraft: z.boolean().nullish(),
+})
+
+type Shared = z.infer<typeof SharedSchema>
+
+export const EventSchema = SharedSchema.extend({
+  agendaId: z.union([z.number(), z.string()]),
+  location: z.string().nullish(),
+  url: z.string().nullish(),
+  startDate: z.string().nullish(),
+  endDate: z.string().nullish(),
+  categories: z.array(z.string()),
+  likes: z.number().nullish(),
+  subscribers: z.number().nullish(),
+})
+
+export type EventItem = z.infer<typeof EventSchema>
+
+export const AgendaItemSchema = SharedSchema.extend({
+  logo: z.string().nullish(),
+  eventsNumber: z.number().nullable(),
+  attendanceRate: z.number().nullable(),
+  events: z.array(EventSchema),
+  admins: z.array(AdminSchema).nullish(),
+  categories: z.array(z.any()),
+})
+
+const CategoryItemSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  agendas: AgendaItemSchema.array(),
+  rootId: z.number().nullish(),
+  root: z.any().optional(),
+})
+
+export const AgendaSchema = AgendaItemSchema.extend({
+  categories: z.array(CategoryItemSchema),
+})
+
+export type CategoryItem = Merge<
+  z.infer<typeof CategoryItemSchema>,
+  {
+    root?: CategoryItem
+  }
+>
 
 export interface CategoryTree extends CategoryItem {
   children?: CategoryItem[]
 }
 
-export interface AgendaItem extends Shared {
-  logo?: string | null
-  eventsNumber: number | null
-  attendanceRate: number | null
-  events: EventItem[]
-  admins?: Admin[]
-  categories: CategoryItem[]
-}
+export type AgendaItem = z.infer<typeof AgendaSchema>

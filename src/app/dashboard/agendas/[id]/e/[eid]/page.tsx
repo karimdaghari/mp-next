@@ -1,8 +1,6 @@
 import { Heart, Send, Share2, Users } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { StatCard } from '~/app/dashboard/_components/stat-card'
-import { getEvent } from '~/app/dashboard/_lib/data'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,22 +10,17 @@ import {
 } from '~/components/ui/breadcrumb'
 import { TypographyLarge, TypographyMuted } from '~/components/ui/typography'
 import { EventPreview } from '../../_components/event-preview'
+import { api } from '~/trpc/server'
 
-export default function Page({
-  params: { id, eid },
+export default async function Page({
+  params: { id: agendaId, eid: eventId },
 }: {
   params: {
     id: string
     eid: string
   }
 }) {
-  const event = getEvent(Number(eid))
-
-  if (!event) {
-    redirect('/404')
-  }
-
-  const { agenda, name, description } = event
+  const { agenda, name, description } = await api.events.get({ id: +eventId })
 
   return (
     <>
@@ -41,7 +34,7 @@ export default function Page({
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/dashboard/agendas/${id}`}>{agenda.name}</Link>
+              <Link href={`/dashboard/agendas/${agendaId}`}>{agenda.name}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
