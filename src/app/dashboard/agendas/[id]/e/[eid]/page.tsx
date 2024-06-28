@@ -20,7 +20,10 @@ export default async function Page({
     eid: string
   }
 }) {
-  const { agenda, name, description } = await api.events.get({ id: +eventId })
+  const { agenda, name, description, location, startDate, endDate, cover } =
+    await api.events.get({
+      id: +eventId,
+    })
 
   return (
     <>
@@ -42,13 +45,11 @@ export default async function Page({
         </BreadcrumbList>
       </Breadcrumb>
       <div className="space-y-1 lg:mx-auto">
-        <div>
-          <div className="grid lg:grid-cols-4 gap-1">
-            <StatCard icon={Heart} title="Likes" value={6} />
-            <StatCard icon={Users} title="Participants" value={6} />
-            <StatCard title="Partages" value={221} icon={Share2} />
-            <StatCard title="Envois" value={432} icon={Send} />
-          </div>
+        <div className="grid lg:grid-cols-4 gap-1">
+          <StatCard icon={Heart} title="Likes" value={6} />
+          <StatCard icon={Users} title="Participants" value={6} />
+          <StatCard title="Partages" value={221} icon={Share2} />
+          <StatCard title="Envois" value={432} icon={Send} />
         </div>
         <div className="bg-white border rounded-lg p-4">
           <div>
@@ -56,7 +57,16 @@ export default async function Page({
             <TypographyMuted>{description}</TypographyMuted>
           </div>
           <div className="scale-90 hidden lg:block">
-            <EventPreview />
+            <EventPreview
+              coverImage={cover}
+              name={name}
+              description={description ?? undefined}
+              location={location}
+              agendaName={agenda.name}
+              agendaLogo={agenda.logo}
+              endDate={endDate}
+              startDate={startDate}
+            />
           </div>
           <TypographyMuted className="lg:hidden mt-4 lg:mt-0">
             Vous êtes sur une version mobile, pour afficher la prévisualisation

@@ -91,7 +91,15 @@ export default async function Page({
                   </TypographyMuted>
                   <CardTitle>{name}</CardTitle>
                 </div>
-                <AgendaOptions name={name} />
+                <AgendaOptions
+                  input={{
+                    id,
+                    name,
+                    description,
+                    logo,
+                    categoriesIds: categories.map((c) => c.id),
+                  }}
+                />
               </div>
               <CardDescription className="line-clamp-2">
                 {description}

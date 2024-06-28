@@ -54,6 +54,16 @@ import { cn } from '~/lib/utils'
 import type { AgendaItem as Props } from '../../_lib/types'
 import { AdminList } from './admin-list'
 import { AgendaForm } from './agenda-form'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '~/components/ui/alert-dialog'
 
 export function AgendaCard({
   id,
@@ -64,8 +74,11 @@ export function AgendaCard({
   eventsNumber,
   attendanceRate,
   isDraft = false,
+  categories,
 }: Props) {
-  const [open, setOpen] = useState(false)
+  const [openAdminList, setOpenAdminList] = useState(false)
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+
   return (
     <Card className="duration-500 hover:shadow-xl transition-all ease-in-out border border-primary">
       <div className="flex items-center space-x-3">
@@ -183,15 +196,15 @@ export function AgendaCard({
             </DialogHeader>
             <ScrollArea className="max-h-[75dvh] lg:max-h-full">
               <AgendaForm
+                intent="update"
                 input={{
                   id,
                   name,
                   description,
                   logo,
                   cover,
-                  eventsNumber,
-                  attendanceRate,
                   isDraft,
+                  categoriesIds: categories.map((c) => c.id),
                 }}
               />
             </ScrollArea>
@@ -210,6 +223,20 @@ export function AgendaCard({
             <ArrowRight className="ml-2 w-4 h-4" />
           </Link>
         )}
+        <AlertDialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Désactiver {"l'agenda"} ?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Êtes-vous sûr de vouloir désactiver {"l'agenda"} ?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Annuler</AlertDialogCancel>
+              <AlertDialogAction>Confirmer</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
         <DropdownMenu>
           <DropdownMenuTrigger
             className={buttonVariants({
@@ -234,7 +261,7 @@ export function AgendaCard({
             </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={(e) => {
-                setOpen(true)
+                setOpenAdminList(true)
                 e.stopPropagation()
               }}
             >
@@ -244,7 +271,10 @@ export function AgendaCard({
             {!isDraft && (
               <>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive hover:text-destructive">
+                <DropdownMenuItem
+                  className="text-destructive hover:text-destructive"
+                  onSelect={() => setOpenDeleteDialog(true)}
+                >
                   <Lock className="w-4 h-4 mr-2" />
                   Désactiver
                 </DropdownMenuItem>
@@ -252,7 +282,7 @@ export function AgendaCard({
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={openAdminList} onOpenChange={setOpenAdminList}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>Administrateurs</DialogTitle>

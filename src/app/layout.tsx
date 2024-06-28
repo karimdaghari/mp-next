@@ -4,6 +4,7 @@ import './devices.css'
 import '~/styles/globals.css'
 import { cn } from '~/lib/utils'
 import { TRPCReactProvider } from '~/trpc/react'
+import { Toaster } from '~/components/ui/sonner'
 
 const manrope = Manrope({ subsets: ['latin'] })
 
@@ -19,8 +20,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <TRPCReactProvider>
-        <body className={cn('min-h-dvh h-dvh bg-muted', manrope.className)}>
-          {children}
+        <body className={manrope.className}>
+          <main className={cn('min-h-dvh h-dvh bg-muted')}>{children}</main>
+          <Toaster richColors position="top-right" closeButton />
         </body>
       </TRPCReactProvider>
     </html>

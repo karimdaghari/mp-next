@@ -18,12 +18,13 @@ import {
 import { ScrollArea } from '~/components/ui/scroll-area'
 import { AdminList } from '../../_components/admin-list'
 import { AgendaForm } from '../../_components/agenda-form'
+import type { RouterInputs } from '~/trpc/react'
 
 interface Props {
-  name: string
+  input: RouterInputs['agenda']['update']
 }
 
-export function AgendaOptions({ name }: Props) {
+export function AgendaOptions({ input }: Props) {
   const [showEdit, setShowEdit] = useState(false)
   const [showAdmin, setShowAdmin] = useState(false)
   return (
@@ -60,7 +61,7 @@ export function AgendaOptions({ name }: Props) {
             <DialogTitle>Modifier {"l'agenda"}</DialogTitle>
           </DialogHeader>
           <ScrollArea className="max-h-[75dvh] lg:max-h-[80dvh] xl:max-h-full">
-            <AgendaForm />
+            <AgendaForm intent="update" input={input} />
           </ScrollArea>
         </DialogContent>
       </Dialog>

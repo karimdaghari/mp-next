@@ -69,7 +69,7 @@ export function DateInput<T extends FieldValues>({
                   {field.value ? (
                     format(
                       new Date(field.value),
-                      `dd/MM/yyyy${withTime ? ' HH:mm' : ''}`,
+                      `dd/MM/yyyy${withTime ? ' à HH:mm' : ''}`,
                     )
                   ) : (
                     <span>{placeholder}</span>

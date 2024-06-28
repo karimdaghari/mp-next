@@ -8,6 +8,7 @@ import {
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
+import { AgendaInputSchema } from '~/app/dashboard/_lib/types'
 
 export const agendaRouter = createTRPCRouter({
   getAll: publicProcedure.query(() => getAllAgendas()),
@@ -30,4 +31,16 @@ export const agendaRouter = createTRPCRouter({
   getAllCategories: publicProcedure.query(() => getAllCategories()),
   getAllCategoriesTree: publicProcedure.query(() => getAllCategoriesTree()),
   getAllAdmins: publicProcedure.query(() => getAllAdmins()),
+  create: publicProcedure.input(AgendaInputSchema).mutation(({ input }) => {
+    console.log(`Creating agenda: ${input}`)
+  }),
+  update: publicProcedure
+    .input(
+      AgendaInputSchema.required({
+        id: true,
+      }),
+    )
+    .mutation(({ input }) => {
+      console.log(`Updating agenda: ${input}`)
+    }),
 })

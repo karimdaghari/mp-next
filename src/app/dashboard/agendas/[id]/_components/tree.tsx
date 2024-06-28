@@ -92,7 +92,7 @@ function TreeItem({ data, depth }: TreeItemProps) {
         }}
       >
         {data.agendas.map((agenda) => {
-          const { eventsNumber, attendanceRate, isDraft, id, name } = agenda
+          const { eventsNumber, attendanceRate, isDraft, id } = agenda
           return (
             <div key={agenda.id}>
               <Card className="bg-white p-0 rounded-lg border w-full">
@@ -168,11 +168,10 @@ function TreeItem({ data, depth }: TreeItemProps) {
                       </DialogHeader>
                       <ScrollArea className="max-h-[75dvh] lg:max-h-full">
                         <AgendaForm
+                          intent="update"
                           input={{
-                            id: agenda.id,
-                            name: agenda.name,
-                            eventsNumber,
-                            attendanceRate,
+                            ...agenda,
+                            categoriesIds: agenda.categories.map((c) => c.id),
                           }}
                         />
                       </ScrollArea>

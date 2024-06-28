@@ -1,6 +1,6 @@
 'use client'
 import { Check, ChevronsUpDown, PlusIcon, X, XIcon } from 'lucide-react'
-import R from 'remeda'
+import * as R from 'remeda'
 import { type ReactNode, useState } from 'react'
 import { Button, buttonVariants } from './button'
 import {
@@ -108,6 +108,8 @@ export function Combobox({
     })),
     R.prop('group'),
   )
+
+  console.log({ options })
 
   const getOptionDisplay = (option: Option, selected?: boolean) => {
     return (

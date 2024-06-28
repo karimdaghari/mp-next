@@ -1,3 +1,5 @@
+import { format, isSameDay } from 'date-fns'
+import { fr } from 'date-fns/locale/fr'
 import {
   CalendarDaysIcon,
   ChevronRight,
@@ -6,6 +8,7 @@ import {
   Info,
   MapPinned,
 } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import {
@@ -14,17 +17,60 @@ import {
   TypographySmall,
 } from '~/components/ui/typography'
 
-export function EventPreview() {
+interface Props {
+  name: string
+  description?: string | null
+  location?: string | null
+  agendaName: string
+  agendaLogo: string | null | undefined
+  startDate: string | null | undefined
+  endDate: string | null | undefined
+  coverImage: string | null | undefined
+}
+
+export function EventPreview(props: Props) {
+  let date: string | undefined
+
+  if (props.startDate && props.endDate) {
+    if (isSameDay(props.startDate, props.endDate)) {
+      date = `${format(props.startDate, "E d MMM 'de' HH:mm", {
+        locale: fr,
+      })} à ${format(props.endDate, 'HH:mm', {
+        locale: fr,
+      })}`
+    } else {
+      date = `${format(props.startDate, 'E d MMM à HH:mm', {
+        locale: fr,
+      })} - ${format(props.endDate, 'E d MMM à HH:mm', {
+        locale: fr,
+      })}`
+    }
+  } else if (props.startDate && !props.endDate) {
+    date = `${format(props.startDate, 'E d MMM à HH:mm', {
+      locale: fr,
+    })} - ?`
+  } else {
+    date = 'Pas de date définie'
+  }
+
   return (
     <div className="flex justify-center items-center">
       <div className="device device-iphone-14">
-        <div className="device-frame relative">
-          <div className="bg-background h-full rounded-t-[60px] rounded-b-[60px] pt-12">
+        <div className="device-frame">
+          <div className="relative bg-background h-full rounded-t-[60px] rounded-b-[60px] pt-12">
             <div className="h-52 relative rounded-t-[6px]">
-              <div className="h-full bg-gray-400" />
+              {props.coverImage ? (
+                <img
+                  src={props.coverImage}
+                  alt={`Affiche de l'événement ${props.name}`}
+                  className="h-full w-full object-cover rounded-t-[6px]"
+                />
+              ) : (
+                <div className="h-full bg-gray-400" />
+              )}
               <div className="absolute bottom-2 right-2 flex items-center bg-white rounded-xl px-2 py-1">
-                <Heart className="h-5 w-5 mr-1" />
-                <span className="font-medium">6</span>
+                <Heart className="size-5 mr-1" />
+                <span className="font-medium">42</span>
               </div>
             </div>
             <div className="p-4 space-y-4">
@@ -37,12 +83,18 @@ export function EventPreview() {
 
               <div className="border p-4 rounded-lg flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 rounded-full bg-gray-400" />
-                  <p className="font-medium">Jours fériés 2023-2024</p>
+                  <Avatar className="size-9 rounded-full">
+                    <AvatarFallback>{props.agendaName[0]}</AvatarFallback>
+                    <AvatarImage
+                      src={props.agendaLogo ?? undefined}
+                      alt={`Logo de l'agenda ${props.agendaName}`}
+                    />
+                  </Avatar>
+                  <p className="font-medium line-clamp-1">{props.agendaName}</p>
                 </div>
                 <Button
                   size="sm"
-                  className="rounded-xl bg-blue-500 hover:bg-blue-600"
+                  className="rounded-xl bg-blue-500 hover:bg-blue-600 hover:cursor-default"
                 >
                   Suivre
                 </Button>
@@ -53,17 +105,21 @@ export function EventPreview() {
               </Badge>
 
               <div className="space-y-3">
-                <TypographyLarge>Lundi de Pentecôte</TypographyLarge>
+                <TypographyLarge className="line-clamp-1">
+                  {props.name}
+                </TypographyLarge>
                 <div className="flex items-center">
-                  <CalendarDaysIcon className="h-5 w-5 mr-1" />
-                  <TypographySmall>lun. 20 mai</TypographySmall>
+                  <CalendarDaysIcon className="size-5 mr-1" />
+                  <TypographySmall>{date}</TypographySmall>
                 </div>
                 <div className="flex items-center">
-                  <MapPinned className="h-5 w-5 mr-1" />
-                  <TypographySmall>Pas de lieu défini</TypographySmall>
+                  <MapPinned className="size-5 mr-1" />
+                  <TypographySmall>
+                    {props.location ?? 'Pas de lieu défini'}
+                  </TypographySmall>
                 </div>
                 <div className="flex items-center">
-                  <Info className="h-5 w-5 mr-1" />
+                  <Info className="size-5 mr-1" />
                   <TypographySmall>En savoir plus</TypographySmall>
                   <ChevronRight className="h-4 w-4 ml-2" />
                 </div>
@@ -75,14 +131,16 @@ export function EventPreview() {
               </div>
 
               <div className="space-y-1">
-                <TypographyLarge>À props</TypographyLarge>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                <TypographyLarge>À propos</TypographyLarge>
+                <p className="line-clamp-2">
+                  {props.description ??
+                    'Pas de description pour cet événement.'}
                 </p>
               </div>
 
-              <Button className="w-full">Participer</Button>
+              <Button className="w-full hover:cursor-default">
+                Participer
+              </Button>
             </div>
           </div>
         </div>

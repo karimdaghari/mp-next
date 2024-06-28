@@ -16,7 +16,7 @@ export default async function Page({
     from: string
   }
 }) {
-  const { name } = await api.agenda.get({ id })
+  const { name, logo } = await api.agenda.get({ id })
 
   return (
     <>
@@ -39,7 +39,8 @@ export default async function Page({
       </Breadcrumb>
       <EventForm
         title="Créer un événement"
-        description="Créez un nouvel événement en remplissant les champs ci-dessous."
+        subtitle="Créez un nouvel événement en remplissant les champs ci-dessous."
+        meta={{ agendaName: name, agendaLogo: logo }}
       />
     </>
   )

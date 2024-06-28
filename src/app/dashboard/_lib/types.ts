@@ -1,7 +1,7 @@
 import type { Merge } from 'type-fest'
 import { z } from 'zod'
 
-export const AdminSchema = z.object({
+const AdminSchema = z.object({
   id: z.number(),
   name: z.string(),
   email: z.string().email(),
@@ -13,19 +13,17 @@ export type Admin = z.infer<typeof AdminSchema>
 const SharedSchema = z.object({
   id: z.union([z.number(), z.string()]),
   name: z.string(),
-  description: z.string().nullish(),
+  description: z.string(),
   cover: z.string().nullish(),
   isDraft: z.boolean().nullish(),
 })
-
-type Shared = z.infer<typeof SharedSchema>
 
 export const EventSchema = SharedSchema.extend({
   agendaId: z.union([z.number(), z.string()]),
   location: z.string().nullish(),
   url: z.string().nullish(),
-  startDate: z.string().nullish(),
-  endDate: z.string().nullish(),
+  startDate: z.string().datetime({ offset: true }).nullish(),
+  endDate: z.string().datetime({ offset: true }).nullish(),
   categories: z.array(z.string()),
   likes: z.number().nullish(),
   subscribers: z.number().nullish(),
@@ -66,3 +64,26 @@ export interface CategoryTree extends CategoryItem {
 }
 
 export type AgendaItem = z.infer<typeof AgendaSchema>
+
+export const AgendaInputSchema = AgendaItemSchema.omit({
+  admins: true,
+  attendanceRate: true,
+  eventsNumber: true,
+  events: true,
+  categories: true,
+})
+  .extend({
+    categoriesIds: z.array(z.string().or(z.number())),
+  })
+  .partial({
+    id: true,
+  })
+
+export type AgendaInput = z.infer<typeof AgendaInputSchema>
+
+export const EventInputSchema = EventSchema.omit({
+  subscribers: true,
+  likes: true,
+})
+
+export type EventInput = z.infer<typeof EventInputSchema>

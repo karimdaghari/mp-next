@@ -14,7 +14,18 @@ import {
   Rss,
 } from 'lucide-react'
 import Link from 'next/link'
+import { useState } from 'react'
 import type { EventItem as Props } from '~/app/dashboard/_lib/types'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '~/components/ui/alert-dialog'
 import { Badge } from '~/components/ui/badge'
 import { buttonVariants } from '~/components/ui/button'
 import {
@@ -62,6 +73,7 @@ export function EventCard({
   agendaId,
   categories,
 }: Props) {
+  const [openDelete, setOpenDelete] = useState(false)
   let formattedDate = null
 
   const formatDate = (date: string | Date) =>
@@ -226,6 +238,23 @@ export function EventCard({
             Éditer <EditIcon className="w-4 h-4 ml-2" />
           </Link>
         )}
+        <AlertDialog open={openDelete} onOpenChange={setOpenDelete}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Êtes-vous sûr de vouloir désactiver cet événement ?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                Vous êtes sur le point de désactiver cet événement. Cette action
+                est irréversible. Voulez-vous continuer ?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Annuler</AlertDialogCancel>
+              <AlertDialogAction>Confirmer</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
         <DropdownMenu>
           <DropdownMenuTrigger
             className={buttonVariants({
@@ -251,7 +280,10 @@ export function EventCard({
             {!isDraft && !isPastEvent && (
               <>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive hover:text-destructive">
+                <DropdownMenuItem
+                  className="text-destructive hover:text-destructive"
+                  onSelect={() => setOpenDelete(true)}
+                >
                   <Lock className="w-4 h-4 mr-2" />
                   Désactiver
                 </DropdownMenuItem>

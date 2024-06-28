@@ -25,6 +25,8 @@ export default async function Page({
   }
   const { agenda, name } = event
 
+  console.log({ event })
+
   return (
     <>
       <Breadcrumb className="mb-4">
@@ -47,8 +49,24 @@ export default async function Page({
 
       <EventForm
         title="Modifier un événement"
-        description="Modifiez les informations de cet événement en remplissant les champs ci-dessous."
-        input={event}
+        subtitle="Modifiez les informations de cet événement en remplissant les champs ci-dessous."
+        input={{
+          agendaId: event.agendaId,
+          categories: event.categories,
+          id: event.id,
+          description: event.description,
+          name: event.name,
+          cover: event.cover,
+          endDate: event.endDate,
+          startDate: event.startDate,
+          isDraft: event.isDraft,
+          location: event.location,
+          url: event.url,
+        }}
+        meta={{
+          agendaName: agenda.name,
+          agendaLogo: agenda.logo,
+        }}
       />
     </>
   )

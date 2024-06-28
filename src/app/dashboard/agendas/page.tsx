@@ -43,7 +43,7 @@ export default async function Page() {
               Demander un agenda supplémentaire au service client
             </DialogDescription>
           </DialogHeader>
-          <AgendaForm isNew />
+          <AgendaForm intent="create" />
         </DialogContent>
       </Dialog>
       <Tabs defaultValue="list">
