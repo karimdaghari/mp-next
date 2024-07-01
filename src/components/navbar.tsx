@@ -13,9 +13,20 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
 import { TypographyMuted, TypographySmall } from '~/components/ui/typography'
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from './ui/navigation-menu'
 
 export function Navbar() {
   const menu = [
+    {
+      label: 'Dashboard',
+      link: '/dashboard',
+    },
     {
       label: 'Mes agenda',
       link: '/dashboard/agendas',
@@ -25,7 +36,7 @@ export function Navbar() {
   return (
     <nav className="p-2 px-4 bg-white border-b flex items-center justify-between shadow-sm">
       <div className="flex items-center space-x-2">
-        <Link href="/dashboard/agendas">
+        <Link href="/dashboard">
           <Logo
             className={buttonVariants({
               variant: 'ghost',
@@ -33,6 +44,19 @@ export function Navbar() {
             })}
           />
         </Link>
+        <NavigationMenu className="hidden lg:block">
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              {menu.map((item) => (
+                <Link key={item.link} href={item.link} legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    {item.label}
+                  </NavigationMenuLink>
+                </Link>
+              ))}
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
       <div className="pt-0.5">
         <div>
